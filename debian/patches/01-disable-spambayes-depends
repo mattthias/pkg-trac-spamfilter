@@ -1,0 +1,13 @@
+Index: spam-filter/setup.py
+===================================================================
+--- spam-filter.orig/setup.py	2007-11-28 03:28:46.000000000 +0000
++++ spam-filter/setup.py	2007-11-28 03:28:57.000000000 +0000
+@@ -44,7 +44,7 @@
+         spamfilter.admin = tracspamfilter.admin
+         spamfilter.adapters = tracspamfilter.adapters
+         spamfilter.akismet = tracspamfilter.filters.akismet
+-        spamfilter.bayes = tracspamfilter.filters.bayes[SpamBayes]
++        spamfilter.bayes = tracspamfilter.filters.bayes
+         spamfilter.extlinks = tracspamfilter.filters.extlinks
+         spamfilter.ip_blacklist = tracspamfilter.filters.ip_blacklist[DNS]
+         spamfilter.ip_throttle = tracspamfilter.filters.ip_throttle

@@ -1,0 +1,30 @@
+trac-spamfilter for Debian
+--------------------------
+
+CONTENTS
+1. Enabling trac-spamfilter globally
+2. Enabling trac-spamfilter per project
+
+--
+
+Enabling trac-spamfilter globally
+
+   To enable, create or edit /etc/trac.ini and add:
+
+    [components]
+    tracspamfilter.* = enabled
+
+  You must restart tracd for changes to take effect.
+
+--
+
+Enabling trac-spamfilter per project
+
+   Edit the <projectenv>/conf/trac.ini file and the following:
+
+       [components]
+       tracspamfilter.* = enabled
+
+   You must restart tracd for changes to take effect.
+
+ -- Chris Lamb <chris@chris-lamb.co.uk>  Wed, 28 Nov 2007 02:46:13 +0000
