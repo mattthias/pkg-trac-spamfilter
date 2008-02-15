@@ -1,5 +1,5 @@
 This package was debianized by Chris Lamb <chris@chris-lamb.co.uk> on
-Thu,  8 Mar 2007 19:00:07 +0000.
+Fri, 15 Feb 2008 15:14:44 +0000
 
 It was downloaded from http://trac.edgewall.org/wiki/SpamFilter
 
@@ -31,5 +31,5 @@ License:
 On Debian systems, the complete text of the GNU General
 Public License can be found in `/usr/share/common-licenses/GPL'.
 
-The Debian packaging is (C) 2007, Chris Lamb <chris@chris-lamb.co.uk> and
+The Debian packaging is (C) 2008, Chris Lamb <chris@chris-lamb.co.uk> and
 is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
