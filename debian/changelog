@@ -1,5 +1,5 @@
-trac-spamfilter (0.2.1+svn6233) UNRELEASED; urgency=low
+trac-spamfilter (0.2.1+svn6511-1) unstable; urgency=low
 
-  * Initial release
+  * Initial release (Closes: #422441).
 
  -- Chris Lamb <chris@chris-lamb.co.uk>  Wed, 28 Nov 2007 02:46:13 +0000
