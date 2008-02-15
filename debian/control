@@ -6,6 +6,7 @@ Build-Depends: cdbs (>= 0.4.43), debhelper (>= 5.0.38), python (>= 2.4), python-
 Standards-Version: 3.7.2
 Vcs-Git: git://git.chris-lamb.co.uk/pkg-trac-bzr.git
 Vcs-Browser: http://git.chris-lamb.co.uk/?p=pkg-trac-bzr.git
+Homepage: http://trac.edgewall.org/wiki/SpamFilter
 
 Package: trac-spamfilter
 Architecture: all
@@ -13,5 +14,3 @@ Depends: ${python:Depends}, trac (>= 0.10), python-setuptools
 Recommends: python-dnspython (>= 1.3.5), spambayes
 XB-Python-Version: ${python:Versions}
 Description: Spam-prevention plugin for Trac
- .
-  Homepage: http://trac.edgewall.org/wiki/SpamFilter
