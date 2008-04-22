@@ -1,20 +1,49 @@
 #!/usr/bin/make -f
 
-DEB_PYTHON_SYSTEM=pysupport
-
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/python-distutils.mk
-include /usr/share/cdbs/1/rules/patchsys-quilt.mk
-
-DEB_PYTHON_INSTALL_ARGS_ALL += --single-version-externally-managed
-
-clean::
-	-rm -rf TracSpamFilter.egg-info
+include /usr/share/quilt/quilt.make
 
 get-orig-source:
 	set -e ; \
-		svn co http://svn.edgewall.com/repos/trac/sandbox/spam-filter trac-spamfilter-svn; \
-		REVISION=`svnversion trac-spamfilter-svn/`; \
-		find trac-spamfilter-svn/ -depth -type d -name ".svn" | xargs rm -rf; \
-		tar cfz trac-spamfilter_0.2.1+svn$$REVISION.orig.tar.gz trac-spamfilter-svn/; \
+		svn co http://svn.edgewall.com/repos/trac/sandbox/spam-filter trac-spamfilter-svn ; \
+		REVISION=`svnversion trac-spamfilter-svn/` ; \
+		find trac-spamfilter-svn/ -depth -type d -name ".svn" -print0 | xargs -0 rm -rf ; \
+		tar cfz trac-spamfilter_0.2.1+svn$$REVISION.orig.tar.gz trac-spamfilter-svn/ ; \
 		rm -rf trac-spamfilter-svn/
+
+build: patch build-stamp
+build-stamp:
+	python setup.py build
+	touch $@
+
+clean: unpatch
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	dh_clean
+	find -type f -name "*.pyc" -print0 | xargs -0 rm -f
+	rm -f TracSpamFilter.egg-info
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean
+	dh_install
+	python setup.py install --root=$(CURDIR)/debian/trac-spamfilter
+
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_pysupport
+	dh_installchangelogs
+	dh_installdocs
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-arch: build install
+
+binary: binary-arch binary-indep
+.PHONY: build clean binary-indep binary-arch binary install
