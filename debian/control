@@ -16,8 +16,8 @@ Description: Spam-prevention plugin for Trac
  This plugin rejects contributions to Trac environments that contain spam. It
  can use the following techniques:
  .
-  - Regular expressions
-  - Akismet web service
-  - IP throttling
-  - IP blacklisting (requires python-dnspython package)
-  - Bayesian filtering (requires spambayes package)
+  * Regular expressions
+  * Akismet web service
+  * IP throttling
+  * IP blacklisting (requires python-dnspython package)
+  * Bayesian filtering (requires spambayes package)
