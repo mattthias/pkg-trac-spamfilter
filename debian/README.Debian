@@ -1,30 +1,49 @@
 trac-spamfilter for Debian
 --------------------------
 
-CONTENTS
-1. Enabling trac-spamfilter globally
-2. Enabling trac-spamfilter per project
+ CONTENTS
+  1. Enabling trac-spamfilter globally
+  2. Enabling trac-spamfilter per project
+  3. Configuring the Akismet plugin
 
---
 
 Enabling trac-spamfilter globally
+=================================
 
    To enable, create or edit /etc/trac.ini and add:
 
     [components]
     tracspamfilter.* = enabled
 
-  You must restart tracd for changes to take effect.
+  You must restart tracd or your webserver for your changes to take effect. You
+  may also need to perform "trac-admin upgrade <projectenv>".
 
---
 
 Enabling trac-spamfilter per project
+====================================
 
    Edit the <projectenv>/conf/trac.ini file and the following:
 
        [components]
        tracspamfilter.* = enabled
 
-   You must restart tracd for changes to take effect.
+  You must restart tracd or your webserver for the changes to take effect. You
+  may also need to run "trac-admin upgrade <projectenv>".
 
- -- Chris Lamb <chris@chris-lamb.co.uk>  Fri, 15 Feb 2008 15:14:56 +0000
+
+Configuring the Akismet plugin
+==============================
+
+   You can use trac-spamfilter with the Akismet web service to check content
+   for spam. For more information, please see <http://www.akismet.com/>.
+
+   This filter requires a Wordpress API key. To configure your key, create or
+   edit the following section in <projectenv>/conf/trac.ini or /etc/trac.ini:
+
+       [spam-filter]
+       akismet_api_key = 1234567890
+
+  You must restart tracd or your webserver for the changes to take effect.
+
+
+ -- Chris Lamb <chris@chris-lamb.co.uk>  Tue, 22 Apr 2008 05:30:41 +0100
