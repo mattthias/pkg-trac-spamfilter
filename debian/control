@@ -13,8 +13,8 @@ Architecture: all
 Depends: ${python:Depends}, trac (>= 0.10), python-setuptools
 Recommends: python-dnspython (>= 1.3.5), spambayes
 Description: Spam-prevention plugin for Trac
- This plugin rejects contributions to Trac environments that contain spam. It
- can use the following techniques:
+ This plugin attempts to reject contributions to Trac environments that contain
+ spam. It can use the following techniques:
  .
   * Regular expressions
   * Akismet web service
