@@ -1,3 +1,6 @@
+# We don't strictly depend on the SpamBayes package as it's an optional
+# component. dpkg already takes care of this stuff anyway.
+
 Index: spam-filter/setup.py
 ===================================================================
 --- spam-filter.orig/setup.py	2007-11-28 03:28:46.000000000 +0000
