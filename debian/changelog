@@ -9,8 +9,9 @@ trac-spamfilter (0.2.1+svn6871-2) unstable; urgency=low
   * Bump Standards-Version to 3.8.0; no changes.
   * Add description for 01-disable-spambayes-depends patch.
   * Move to debhelper 7; no changes.
+  * Drop versioned dependency on Python 2.4.
 
- -- Chris Lamb <lamby@debian.org>  Mon, 16 Feb 2009 02:39:27 +0000
+ -- Chris Lamb <lamby@debian.org>  Mon, 16 Feb 2009 02:40:33 +0000
 
 trac-spamfilter (0.2.1+svn6871-1) unstable; urgency=low
 
