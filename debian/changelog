@@ -1,3 +1,9 @@
+trac-spamfilter (0.2.1+svn6871-2) unstable; urgency=low
+
+  * New maintainer email address.
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 16 Feb 2009 02:25:44 +0000
+
 trac-spamfilter (0.2.1+svn6871-1) unstable; urgency=low
 
   * Initial release (Closes: #422441).

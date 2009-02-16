@@ -1,7 +1,7 @@
 Source: trac-spamfilter
 Section: python
 Priority: optional
-Maintainer: Chris Lamb <chris@chris-lamb.co.uk>
+Maintainer: Chris Lamb <lamby@debian.org>
 Build-Depends: debhelper (>= 5), python (>= 2.4), python-support, python-setuptools, quilt
 Standards-Version: 3.7.3
 Vcs-Git: git://git.chris-lamb.co.uk/pkg-trac-spamfilter.git
