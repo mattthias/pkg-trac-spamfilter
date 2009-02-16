@@ -10,8 +10,8 @@ get-orig-source:
 		tar cfz trac-spamfilter_0.2.1+svn$$REVISION.orig.tar.gz trac-spamfilter-svn/ ; \
 		rm -rf trac-spamfilter-svn/
 
-build: patch build-stamp
-build-stamp:
+build: build-stamp
+build-stamp: $(QUILT_STAMPFN)
 	python setup.py build
 	touch $@
 
@@ -43,7 +43,7 @@ binary-indep: build install
 	dh_md5sums
 	dh_builddeb
 
-binary-arch: build install
+binary-arch:
 
-binary: binary-arch binary-indep
+binary: binary-indep
 .PHONY: build clean binary-indep binary-arch binary install
