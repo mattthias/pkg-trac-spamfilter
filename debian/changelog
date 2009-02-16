@@ -6,8 +6,9 @@ trac-spamfilter (0.2.1+svn6871-2) unstable; urgency=low
   * Tidy debian/rules.
   * Add dummy debian/watch file.
   * Use © symbol instead of (C) in debian/copyright to appease lintian.
+  * Bump Standards-Version to 3.8.0; no changes.
 
- -- Chris Lamb <lamby@debian.org>  Mon, 16 Feb 2009 02:32:28 +0000
+ -- Chris Lamb <lamby@debian.org>  Mon, 16 Feb 2009 02:35:56 +0000
 
 trac-spamfilter (0.2.1+svn6871-1) unstable; urgency=low
 
