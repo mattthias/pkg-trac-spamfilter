@@ -1,7 +1,5 @@
 #!/usr/bin/make -f
 
-include /usr/share/quilt/quilt.make
-
 get-orig-source:
 	set -e ; \
 		svn co http://svn.edgewall.com/repos/trac/sandbox/spam-filter trac-spamfilter-svn ; \
@@ -10,40 +8,9 @@ get-orig-source:
 		tar cfz trac-spamfilter_0.2.1+svn$$REVISION.orig.tar.gz trac-spamfilter-svn/ ; \
 		rm -rf trac-spamfilter-svn/
 
-build: build-stamp
-build-stamp: $(QUILT_STAMPFN)
-	python setup.py build
-	touch $@
+%:
+	dh --with quilt $@
 
-clean: unpatch
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp
-	dh_clean
-	find -type f -name "*.pyc" -print0 | xargs -0 rm -f
-	rm -f TracSpamFilter.egg-info
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_clean
-	dh_install
-	python setup.py install --root=$(CURDIR)/debian/trac-spamfilter
-
-binary-indep: build install
-	dh_testdir
-	dh_testroot
-	dh_pysupport
-	dh_installchangelogs
-	dh_installdocs
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary-arch:
-
-binary: binary-indep
-.PHONY: build clean binary-indep binary-arch binary install
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf TracSpamFilter.egg-info
