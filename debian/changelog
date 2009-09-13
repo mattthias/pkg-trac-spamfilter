@@ -1,3 +1,10 @@
+trac-spamfilter (0.2.1+svn6871-3) UNRELEASED; urgency=low
+
+  * Replace Depends on python-setuptools with python-pkg-resources.
+    (Closes: #546425)
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 13 Sep 2009 21:47:20 +0100
+
 trac-spamfilter (0.2.1+svn6871-2) unstable; urgency=low
 
   * New maintainer email address.
