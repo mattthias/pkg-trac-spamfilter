@@ -1,3 +1,9 @@
+trac-spamfilter (0.2.1+svn6871-4) UNRELEASED; urgency=low
+
+  * Update Vcs-{Git,Browser}.
+
+ -- Chris Lamb <lamby@debian.org>  Sat, 26 Feb 2011 17:42:27 +0000
+
 trac-spamfilter (0.2.1+svn6871-3) unstable; urgency=low
 
   * Replace Depends on python-setuptools with python-pkg-resources.

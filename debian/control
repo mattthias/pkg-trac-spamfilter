@@ -5,8 +5,8 @@ Maintainer: Chris Lamb <lamby@debian.org>
 Build-Depends: debhelper (>= 7.0.50~), quilt
 Build-Depends-Indep: python-support, python-setuptools
 Standards-Version: 3.8.3
-Vcs-Git: git://git.chris-lamb.co.uk/debian/pkg-trac-spamfilter.git
-Vcs-Browser: http://git.chris-lamb.co.uk/?p=debian/pkg-trac-spamfilter.git
+Vcs-Git: git://github.com/lamby/pkg-trac-spamfilter.git
+Vcs-Browser: https://github.com/lamby/pkg-trac-spamfilter
 Homepage: http://trac.edgewall.org/wiki/SpamFilter
 
 Package: trac-spamfilter
