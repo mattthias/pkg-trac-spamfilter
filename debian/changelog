@@ -1,5 +1,7 @@
 trac-spamfilter (0.2.1+svn6871-4) UNRELEASED; urgency=low
 
+  * Apply patch to avoid crash when invalid UTF-8 is used. Thanks to Vincent
+    Bernat <bernat@debian.org>. (Closes: #615817)
   * Update Vcs-{Git,Browser}.
   * Bump Standards-Version to 3.9.1.
   * Move to '3.0 (quilt)' source package format.
