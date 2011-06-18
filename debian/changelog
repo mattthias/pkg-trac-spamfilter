@@ -1,3 +1,9 @@
+trac-spamfilter (0.2.1+svn6871-5) UNRELEASED; urgency=low
+
+  * Bump Standards-Version to 3.9.2.
+
+ -- Chris Lamb <lamby@debian.org>  Sat, 18 Jun 2011 14:48:44 +0100
+
 trac-spamfilter (0.2.1+svn6871-4) unstable; urgency=low
 
   * Apply patch to avoid crash when invalid UTF-8 is used. Thanks to Vincent
