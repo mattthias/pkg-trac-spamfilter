@@ -1,0 +1,67 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/">
+  <xi:include href="admin.html" />
+  <xi:include href="macros.html" />
+  <head>
+    <title>Spam Monitoring</title>
+  </head>
+
+  <body>
+    <div class="nav">
+      ${prevnext_nav('Log Entry', 'Back to List')}
+    </div>
+    <h2>Spam Filtering: Monitoring</h2>
+
+    <form class="mod" id="spamentry" method="post">
+      <fieldset>
+        <legend>Log Entry:</legend>
+        <h3>Information</h3>
+        <table class="meta"><tr>
+          <th>Time:</th>
+          <td>${format_datetime(entry.time)} (${pretty_timedelta(fromtimestamp(entry.time))} ago)</td>
+        </tr><tr>
+          <th>Path:</th>
+          <td><a href="${href(entry.path)}">${abs_href(entry.path)}</a></td>
+        </tr><tr>
+          <th>Author:</th>
+          <td>${entry.author}</td>
+        </tr><tr>
+          <th>Authenticated:</th>
+          <td>${entry.authenticated and 'yes' or 'no'}</td>
+        </tr><tr>
+          <th>IP address:</th>
+          <td>${entry.ipnr}</td>
+        </tr><tr>
+          <th>Karma:</th>
+          <td>
+            <strong>${entry.karma}</strong>
+            (marked as ${entry.rejected and 'spam' or 'ham'})
+            <ul>
+              <li py:for="reason in entry.reasons">$reason</li>
+            </ul>
+          </td>
+        </tr></table>
+        <div class="content">
+          <h3>Submitted content</h3>
+          <pre>${entry.content}</pre>
+        </div>
+        <div class="headers">
+          <h3>HTTP headers</h3>
+          <pre>${entry.headers}</pre>
+        </div>
+        <div class="buttons">
+          <input type="hidden" name="sel" value="${entry.id}" />
+          <input type="submit" name="markspam" value="Mark as Spam" />
+          <input type="submit" name="markham" value="Mark as Ham" />
+          <input type="submit" name="delete" value="Delete" />
+        </div>
+      </fieldset>
+    </form>
+
+  </body>
+
+</html>
