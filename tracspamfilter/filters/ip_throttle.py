@@ -15,9 +15,8 @@ from datetime import datetime, timedelta
 
 from trac.config import IntOption
 from trac.core import *
-from tracspamfilter.api import IFilterStrategy
+from tracspamfilter.api import IFilterStrategy, N_
 from tracspamfilter.model import LogEntry
-
 
 class IPThrottleFilterStrategy(Component):
     """Spam filter strategy that throttles multiple subsequent submissions from
@@ -27,26 +26,30 @@ class IPThrottleFilterStrategy(Component):
 
     karma_points = IntOption('spam-filter', 'ip_throttle_karma', '3',
         """By how many points exceeding the configured maximum number of posts
-        per hour impacts the overall score.""")
+        per hour impacts the overall score.""", doc_domain="tracspamfilter")
 
     max_posts = IntOption('spam-filter', 'max_posts_by_ip', '10',
         """The maximum allowed number of submissions per hour form a single IP
         address. If this limit is exceeded, subsequent permissions get negative
-        karma.""")
+        karma.""", doc_domain="tracspamfilter")
 
     # IFilterStrategy implementation
 
-    def test(self, req, author, content):
+    def is_external(self):
+        return False
+
+    def test(self, req, author, content, ip):
         threshold = datetime.now() - timedelta(hours=1)
         num_posts = 0
-        for entry in LogEntry.select(self.env, ipnr=req.remote_addr):
+
+        for entry in LogEntry.select(self.env, ipnr=ip):
             if datetime.fromtimestamp(entry.time) < threshold:
                 break
             num_posts += 1
 
         if num_posts > self.max_posts:
             return -abs(self.karma_points) * num_posts / self.max_posts, \
-                   'Maximum number of posts per hour for this IP exceeded'
+                   N_('Maximum number of posts per hour for this IP exceeded')
 
-    def train(self, req, author, content, spam=True):
+    def train(self, req, author, content, ip, spam=True):
         pass

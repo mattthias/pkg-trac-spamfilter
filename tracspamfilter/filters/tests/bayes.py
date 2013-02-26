@@ -38,7 +38,7 @@ class BayesianFilterStrategyTestCase(unittest.TestCase):
 
         req = Mock(authname='anonymous', base_url='http://example.org/',
                    remote_addr='127.0.0.1')
-        self.assertEquals(None, self.strategy.test(req, 'John Doe', 'Spam'))
+        self.assertEquals(None, self.strategy.test(req, 'John Doe', 'Spam', '127.0.0.1'))
 
     def test_karma_calculation_negative(self):
         bayes.Hammie = lambda x: Mock(score=lambda x: .75,
@@ -46,7 +46,7 @@ class BayesianFilterStrategyTestCase(unittest.TestCase):
 
         req = Mock(authname='anonymous', base_url='http://example.org/',
                    remote_addr='127.0.0.1')
-        points, reasons = self.strategy.test(req, 'John Doe', 'Spam')
+        points, reasons = self.strategy.test(req, 'John Doe', 'Spam', '127.0.0.1')
         self.assertEquals(-5, points)
 
     def test_karma_calculation_positive(self):
@@ -55,24 +55,24 @@ class BayesianFilterStrategyTestCase(unittest.TestCase):
 
         req = Mock(authname='anonymous', base_url='http://example.org/',
                    remote_addr='127.0.0.1')
-        points, reasons = self.strategy.test(req, 'John Doe', 'Spam')
+        points, reasons = self.strategy.test(req, 'John Doe', 'Spam', '127.0.0.1')
         self.assertEquals(5, points)
 
     def test_classifier_untrained(self):
         req = Mock(authname='anonymous', base_url='http://example.org/',
                    remote_addr='127.0.0.1')
-        self.assertEqual(None, self.strategy.test(req, 'John Doe', 'Hammie'))
+        self.assertEqual(None, self.strategy.test(req, 'John Doe', 'Hammie', '127.0.0.1'))
 
     def test_classifier_basics(self):
         req = Mock(authname='anonymous', base_url='http://example.org/',
                    remote_addr='127.0.0.1')
         self.env.config.set('spam-filter', 'bayes_min_training', '1')
-        self.strategy.train(req, 'John Doe', 'Spam spam spammie', True)
-        self.strategy.train(req, 'John Doe', 'Ham ham hammie', False)
+        self.strategy.train(req, 'John Doe', 'Spam spam spammie', '127.0.0.1', True)
+        self.strategy.train(req, 'John Doe', 'Ham ham hammie', '127.0.0.1', False)
 
-        points, reasons = self.strategy.test(req, 'John Doe', 'Hammie')
+        points, reasons = self.strategy.test(req, 'John Doe', 'Hammie', '127.0.0.1')
         assert points > 0, 'Expected positive karma'
-        points, reasons = self.strategy.test(req, 'John Doe', 'Spam')
+        points, reasons = self.strategy.test(req, 'John Doe', 'Spam', '127.0.0.1')
         assert points < 0, 'Expected negative karma'
 
 

@@ -39,7 +39,7 @@ class RegexFilterStrategyTestCase(unittest.TestCase):
         self.strategy = RegexFilterStrategy(self.env)
 
     def test_no_patterns(self):
-        retval = self.strategy.test(Mock(), 'anonymous', 'foobar')
+        retval = self.strategy.test(Mock(), 'anonymous', 'foobar', '127.0.0.1')
         self.assertEqual(None, retval)
 
     def test_one_matching_pattern(self):
@@ -47,8 +47,8 @@ class RegexFilterStrategyTestCase(unittest.TestCase):
 foobar
 }}}"""
         self.strategy.wiki_page_changed(self.page)
-        retval = self.strategy.test(Mock(), 'anonymous', 'foobar')
-        self.assertEqual((-5, 'Content contained blacklisted patterns'), retval)
+        retval = self.strategy.test(Mock(), 'anonymous', 'foobar', '127.0.0.1')
+        self.assertEqual((-5, 'Content contained these blacklisted patterns: \'foobar\''), retval)
 
     def test_multiple_matching_pattern(self):
         self.page.text = """{{{
@@ -57,8 +57,8 @@ foobar
 bar$
 }}}"""
         self.strategy.wiki_page_changed(self.page)
-        retval = self.strategy.test(Mock(), 'anonymous', 'foobar')
-        self.assertEqual((-15, 'Content contained blacklisted patterns'),
+        retval = self.strategy.test(Mock(), 'anonymous', '\nfoobar', '127.0.0.1')
+        self.assertEqual((-15, 'Content contained these blacklisted patterns: \'foobar\', \'bar$\''),
                          retval)
 
 

@@ -44,16 +44,16 @@ class LogEntry(object):
         self.env = env
         self.time = time
         self.path = path
-        self.author = author
+        self.author = to_unicode(author)
         self.authenticated = bool(authenticated)
         self.ipnr = ipnr
-        self.headers = headers or ''
+        self.headers = to_unicode(headers) or ''
         self.content = content
         self.rejected = bool(rejected)
         self.karma = karma
         if isinstance(reasons, basestring):
             if reasons:
-                self.reasons = reasons.split('\n')
+                self.reasons = to_unicode(reasons).split('\n')
             else:
                 self.reasons = []
         elif reasons is not None:

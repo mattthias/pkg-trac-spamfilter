@@ -25,7 +25,7 @@ from trac.core import *
 from trac.db import DatabaseManager
 from trac.wiki.api import IWikiChangeListener
 from trac.wiki.model import WikiPage
-from tracspamfilter.api import IFilterStrategy
+from tracspamfilter.api import IFilterStrategy, N_
 
 from spambayes.hammie import Hammie
 from spambayes.storage import SQLClassifier
@@ -38,18 +38,26 @@ class BayesianFilterStrategy(Component):
 
     karma_points = IntOption('spam-filter', 'bayes_karma', '10',
         """By what factor Bayesian spam probability score affects the overall
-        karma of a submission.""")
+        karma of a submission.""", doc_domain = "tracspamfilter")
 
     min_training = IntOption('spam-filter', 'bayes_min_training', '25',
         """The minimum number of submissions in the training database required
-        for the filter to start impacting the karma of submissions.""")
+        for the filter to start impacting the karma of submissions.""",
+        doc_domain = "tracspamfilter")
 
     # IFilterStrategy implementation
 
-    def test(self, req, author, content):
+    def is_external(self):
+        return False
+
+    def test(self, req, author, content, ip):
         hammie = self._get_hammie()
         nspam = hammie.bayes.nspam
         nham = hammie.bayes.nham
+        if author != None:
+            testcontent = author+"\n"+content
+        else:
+            testcontent = content
 
         if min(nspam, nham) < self.min_training:
             self.log.info('Bayes filter strategy requires more training. '
@@ -63,25 +71,32 @@ class BayesianFilterStrategy(Component):
                           'spam submissions in the training database is large, '
                           'results may be bad.')
 
-        score = hammie.score(content.encode('utf-8'))
+        score = hammie.score(testcontent.encode('utf-8'))
         self.log.debug('SpamBayes reported spam probability of %s', score)
         points = -int(round(self.karma_points * (score * 2 - 1)))
         if points != 0:
-            return points, 'SpamBayes determined spam probability of %.2f%%' % (
-                           score * 100)
+            return points, N_('SpamBayes determined spam probability of %.2f%%'), \
+                           score * 100
 
-    def train(self, req, author, content, spam=True):
+    def train(self, req, author, content, ip, spam=True):
+        if author != None:
+            testcontent = author+"\n"+content
+        else:
+            testcontent = content
         self.log.info('Training SpamBayes, marking content as %s',
                       spam and 'spam' or 'ham')
 
         hammie = self._get_hammie()
-        hammie.train(content.encode('utf-8'), spam)
+        hammie.train(testcontent.encode('utf-8','ignore'), spam)
         hammie.store()
 
     # Internal methods
 
     def _get_hammie(self):
-        return Hammie(TracDbClassifier(self.env.get_db_cnx()))
+        try: # 1.0
+            return Hammie(TracDbClassifier(self.env.get_db_cnx(), self.log))
+        except TypeError, e: # 1.1
+            return Hammie(TracDbClassifier(self.env.get_db_cnx(), self.log), 'c')
 
     def _get_numbers(self):
         hammie = self._get_hammie()
@@ -91,8 +106,9 @@ class BayesianFilterStrategy(Component):
 class TracDbClassifier(SQLClassifier):
     # FIXME: This thing is incredibly slow
 
-    def __init__(self, db):
+    def __init__(self, db, log):
         self.db = db
+        self.log = log
         SQLClassifier.__init__(self, 'Trac')
 
     def load(self):
@@ -103,17 +119,37 @@ class TracDbClassifier(SQLClassifier):
         else: # new database
             self.nspam = self.nham = 0
 
+    def _sanitize(self, text):
+        if isinstance(text, unicode):
+            return text
+        """Remove invalid byte sequences from utf-8 encoded text"""
+        return text.decode('utf-8', 'ignore')
+
     def _get_row(self, word):
+        word = self._sanitize(word)
         cursor = self.db.cursor()
         cursor.execute("SELECT nspam,nham FROM spamfilter_bayes WHERE word=%s",
                        (word,))
         row = cursor.fetchone()
         if not row:
             return {}
-
+        # prevent assertion - happens when there are failures in training and
+        # the count is not updated due to an exception
+        if word != self.statekey:
+            if row[0] > self.nspam:
+                self.log.warn('Reset SPAM count from %d to %d due to keyword \'%s\'.',
+                              self.nspam, row[0], word)
+                self.nspam = row[0]
+                self.store()
+            if row[1] > self.nham:
+                self.log.warn('Reset HAM count from %d to %d due to keyword \'%s\'.',
+                              self.nham, row[1], word)
+                self.nham = row[1]
+                self.store()
         return {'nspam': row[0], 'nham': row[1]}
 
     def _set_row(self, word, nspam, nham):
+        word = self._sanitize(word)
         cursor = self.db.cursor()
         if self._has_key(word):
             cursor.execute("UPDATE spamfilter_bayes SET nspam=%s,nham=%s "
@@ -124,21 +160,19 @@ class TracDbClassifier(SQLClassifier):
         self.db.commit()
 
     def _delete_row(self, word):
+        word = self._sanitize(word)
         cursor = self.db.cursor()
         cursor.execute("DELETE FROM spamfilter_bayes WHERE word=%s", (word,))
         self.db.commit()
 
     def _has_key(self, key):
+        key = self._sanitize(key)
         cursor = self.db.cursor()
         cursor.execute("SELECT COUNT(*) FROM spamfilter_bayes WHERE word=%s",
                        (key,))
         return bool(cursor.fetchone()[0])
 
     def _wordinfoget(self, word):
-        # See http://mail.python.org/pipermail/spambayes-dev/2006-July/003684.html
-        if isinstance(word, unicode):
-            word = word.encode("utf-8")
-
         row = self._get_row(word)
         if row:
             item = self.WordInfoClass()

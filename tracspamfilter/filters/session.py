@@ -15,8 +15,7 @@ from email.Utils import parseaddr
 
 from trac.config import IntOption
 from trac.core import *
-from tracspamfilter.api import IFilterStrategy
-
+from tracspamfilter.api import IFilterStrategy, N_
 
 class SessionFilterStrategy(Component):
     """This strategy grants positive karma points to users with an existing
@@ -29,11 +28,14 @@ class SessionFilterStrategy(Component):
         overall karma of the submission. A third of the points is granted for
         having an existing session at all, the other two thirds are granted
         when the user has his name and/or email address set in the session,
-        respectively.""")
+        respectively.""", doc_domain="tracspamfilter")
 
     # IFilterStrategy implementation
 
-    def test(self, req, author, content):
+    def is_external(self):
+        return False
+
+    def test(self, req, author, content, ip):
         points = 0
         if req.session.last_visit:
             points += abs(self.karma_points) / 3
@@ -43,7 +45,7 @@ class SessionFilterStrategy(Component):
                 email = parseaddr(req.session.get('email'))[1]
                 if email and '@' in email:
                     points += abs(self.karma_points) / 3
-            return points, 'Existing session found'
+            return points, N_('Existing session found')
 
-    def train(self, req, author, content, spam=True):
+    def train(self, req, author, content, ip, spam=True):
         pass

@@ -3,7 +3,8 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xi="http://www.w3.org/2001/XInclude"
-      xmlns:py="http://genshi.edgewall.org/">
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:i18n="http://genshi.edgewall.org/i18n" i18n:domain="tracspamfilter">
   <xi:include href="admin.html" />
   <xi:include href="macros.html" />
   <head>
@@ -13,21 +14,21 @@
   <body>
     <h2>Spam Filtering: Monitoring</h2>
 
-    <form method="post">
+    <form method="post" action="" id="spammonitorform">
       <p py:if="not enabled">
         <strong>Note:</strong> Logging by the spam filter is currently disabled.
       </p>
-      <p class="hint">
+      <p class="hint" py:if="total" i18n:msg="start, end, total">
         Viewing entries ${offset} – ${offset + len(entries) - 1} of ${total}.
       </p>
-      <div class="nav">
+      <div class="nav" py:if="entries">
         ${prevnext_nav('Page')}
       </div>
 
       <table class="listing" id="spammonitor">
         <thead>
           <tr>
-            <th class="sel">&nbsp;</th>
+            <th class="sel" id="selallfield">&nbsp;</th>
             <th>Path</th>
             <th>Author</th>
             <th>IP Address</th>
@@ -35,7 +36,7 @@
             <th>Date/time</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="spamtable">
           <py:for each="idx, entry in enumerate(entries)">
             <tr class="${' '.join(filter(None, [idx % 2 and 'odd' or 'even',
                                                 entry.rejected and 'rejected' or None]))}"
@@ -45,13 +46,14 @@
               </td>
               <td class="path"
                   title="${len(entry.path) > 25 and entry.path or None}">
-                <a href="$entry_href">${shorten_line(entry.path, 25)}</a>
+                <a href="$entry_href">${shorten_line(entry.path, 40)}</a>
               </td>
-              <td class="author" py:with="auth = entry.authenticated and 'yes' or 'no'"
+              <td class="author"
+                  py:with="auth_img = entry.authenticated and 'yes.gif' or 'no.gif'"
                   title="${len(entry.author) > 25 and entry.author or None}">
-                <a href="$entry_href"><img src="${href.chrome('spamfilter', auth + '.gif')}"
-                     title="User was ${entry.authenticated and 'was' or 'was not'} logged in"
-                     alt="$auth" />&nbsp;${shorten_line(entry.author, 25) or 'anonymous'}</a>
+                <a href="$entry_href"><img src="${href.chrome('spamfilter', auth_img)}"
+                     title="${_('User was logged in') if entry.authenticated else _('User was not logged in')}"
+                     alt="${auth_img[:-4]}" />&nbsp;${shorten_line(entry.author, 40) or 'anonymous'}</a>
               </td>
               <td class="ipnr">${entry.ipnr}</td>
               <td class="karma">${entry.karma}</td>
@@ -62,25 +64,112 @@
                 <ul py:if="entry.reasons">
                   <li py:for="reason in entry.reasons">${reason}</li>
                 </ul>
-                <blockquote>${shorten_line(entry.content)}</blockquote>
+                <blockquote py:if="shorten_line(entry.content)"><div>${shorten_line(entry.content)}</div></blockquote>
               </td>
             </tr>
           </py:for>
+          <tr py:if="not entries">
+            <td colspan="6" style="text-align:center">No data available</td>
+          </tr>
         </tbody>
       </table>
 
-      <div class="nav">
+      <div class="nav" py:if="entries">
         ${prevnext_nav('Page')}
       </div>
+      <div id="boxes" py:if="entries"></div>
 
-      <div class="buttons">
+      <div class="buttons" py:if="entries">
         <input type="hidden" name="page" value="$page" />
-        <input type="submit" name="markspam" value="Mark selected as Spam" />
-        <input type="submit" name="markham" value="Mark selected as Ham" />
-        <input type="submit" name="delete" value="Deleted selected" />
+        <input type="hidden" name="num" value="$num" />
+        <input class="spambutton" type="submit" name="markspam" value="${_('Mark selected as Spam')}" />
+        <input class="hambutton" type="submit" name="markham" value="${_('Mark selected as Ham')}" />
+        <input type="submit" name="delete" value="${_('Delete selected')}" />
+        <input class="spambutton" type="submit" name="markspamdel" value="${_('Delete selected as Spam')}" />
+        <input class="hambutton" type="submit" name="markhamdel" value="${_('Delete selected as Ham')}" />
       </div>
     </form>
 
+    <script py:if="entries" type="text/javascript">/*<![CDATA[*/
+      function ToggleSelect()
+      {
+        var box = document.getElementById("selallbutton");
+        var state = box.checked;
+        var checkboxes = document.forms["spammonitorform"].elements["sel"];
+        var num = checkboxes.length;
+        if(!num)
+          checkboxes.checked = state;
+        else
+          for(var i = 0; i < num; ++i)
+            checkboxes[i].checked = state;
+      }
+      function ToggleSelectPerfect(all, no, name)
+      {
+        var box = document.getElementById(name);
+        var state = box.checked;
+        var table = document.getElementById("spamtable");
+        var respam = new RegExp("probability of 9\\d\\.\\d\\d%")
+        var reham = new RegExp("probability of \d\\.\\d\\d%")
+
+        var lines = table.getElementsByTagName('tr');
+        for(var i = 0; i < lines.length; i += 2)
+        {
+          var checkbox = lines[i].getElementsByTagName('input')[0];
+          var html = lines[i+1].innerHTML;
+          if(all && html.indexOf("probability of 100.00%") > 0)
+            checkbox.checked = state;
+          else if(all == 2 && respam.exec(html))
+            checkbox.checked = state;
+          else if(no == 2 && reham.exec(html))
+            checkbox.checked = state;
+          else if(no && html.indexOf("probability of 0.00%") > 0)
+            checkbox.checked = state;
+        }
+      }
+      function ToggleSelectSpam(mode)
+      {
+        var box = document.getElementById(mode ? "selhambutton" : "selspambutton");
+        var state = box.checked;
+        var table = document.getElementById("spamtable");
+
+        var lines = table.getElementsByTagName('tr');
+        for(var i = 0; i < lines.length; i += 2)
+        {
+          var checkbox = lines[i].getElementsByTagName('input')[0];
+          var sstate = lines[i].className.indexOf("rejected");
+          if(mode ? sstate < 0 : sstate >= 0)
+            checkbox.checked = state;
+        }
+      }
+
+      if(document.forms["spammonitorform"].elements["sel"])
+      {
+        document.getElementById("selallfield").innerHTML =
+        "<input type=\"checkbox\" id=\"selallbutton\" onclick=\"ToggleSelect()\"/>";
+
+        document.getElementById("boxes").innerHTML += "<table><tr>"
+        +"<td valign=\"center\"><input class=\"spambox\" type=\"checkbox\" id=\"sel100button\""
+        + "onclick=\"ToggleSelectPerfect(1,0,'sel100button')\"/><\/td>"
+        + "<td class=\"spambox\" valign=\"center\">${_('Select 100.00%% entries') % ()}<\/td>"
+        +"<td valign=\"center\"><input class=\"spambox\" type=\"checkbox\" id=\"sel90button\""
+        + "onclick=\"ToggleSelectPerfect(2,0,'sel90button')\"/><\/td>"
+        + "<td class=\"spambox\" valign=\"center\">${_('Select &gt;90.00%% entries') % ()}<\/td>"
+        +"<td valign=\"center\"><input class=\"hambox\" type=\"checkbox\" id=\"sel10button\""
+        + "onclick=\"ToggleSelectPerfect(0,2,'sel10button')\"/><\/td>"
+        + "<td class=\"hambox\" valign=\"center\">${_('Select &lt;10.00%% entries') % ()}<\/td>"
+        + "<td valign=\"center\"><input class=\"hambox\" type=\"checkbox\" id=\"sel0button\""
+        + "onclick=\"ToggleSelectPerfect(0,1,'sel0button')\"/><\/td>"
+        + "<td class=\"hambox\" valign=\"center\">${_('Select 0.00%% entries') % ()}<\/td>"
+        + "<\/tr><tr>"
+        + "<td valign=\"center\"><input class=\"spambox\" type=\"checkbox\" id=\"selspambutton\""
+        + "onclick=\"ToggleSelectSpam(0)\"/><\/td>"
+        + "<td colspan=3 class=\"spambox\" valign=\"center\">${_('Select Spam entries')}<\/td>"
+        + "<td valign=\"center\"><input class=\"hambox\" type=\"checkbox\" id=\"selhambutton\""
+        + "onclick=\"ToggleSelectSpam(1)\"/><\/td>"
+        + "<td colspan=3 class=\"hambox\" valign=\"center\">${_('Select Ham entries')}<\/td>"
+        + "<\/tr><\/table>";
+      }
+    /*]]>*/</script>
   </body>
 
 </html>

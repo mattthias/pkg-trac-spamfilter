@@ -49,7 +49,7 @@ class AkismetFilterStrategyTestCase(unittest.TestCase):
 
     def test_no_api_key(self):
         req = Mock()
-        retval = self.strategy.test(req, 'anonymous', 'foobar')
+        retval = self.strategy.test(req, 'anonymous', 'foobar', req.remote_addr)
         self.assertEqual(None, retval)
 
     def test_bad_api_key(self):
@@ -58,7 +58,7 @@ class AkismetFilterStrategyTestCase(unittest.TestCase):
         self.env.config.set('spam-filter', 'akismet_api_key', 'INVALID')
 
         self.urlopen.responses = ['invalid']
-        retval = self.strategy.test(req, 'anonymous', 'foobar')
+        retval = self.strategy.test(req, 'anonymous', 'foobar', req.remote_addr)
         self.assertEqual(None, retval)
         self.assertEqual(1, len(self.urlopen.requests))
 
@@ -74,7 +74,7 @@ class AkismetFilterStrategyTestCase(unittest.TestCase):
         self.env.config.set('spam-filter', 'akismet_api_key', 'mykey')
 
         self.urlopen.responses = ['valid', 'false']
-        retval = self.strategy.test(req, 'anonymous', 'foobar')
+        retval = self.strategy.test(req, 'anonymous', 'foobar', req.remote_addr)
         self.assertEqual(None, retval)
         self.assertEqual(2, len(self.urlopen.requests))
 
@@ -93,7 +93,7 @@ class AkismetFilterStrategyTestCase(unittest.TestCase):
         self.env.config.set('spam-filter', 'akismet_api_key', 'mykey')
 
         self.urlopen.responses = ['valid', 'true']
-        retval = self.strategy.test(req, 'anonymous', 'foobar')
+        retval = self.strategy.test(req, 'anonymous', 'foobar', req.remote_addr)
         self.assertEqual((-5, 'Akismet says content is spam'), retval)
         self.assertEqual(2, len(self.urlopen.requests))
 
@@ -103,7 +103,7 @@ class AkismetFilterStrategyTestCase(unittest.TestCase):
         self.env.config.set('spam-filter', 'akismet_api_key', 'mykey')
 
         self.urlopen.responses = ['valid', '']
-        self.strategy.train(req, 'anonymous', 'foobar', spam=False)
+        self.strategy.train(req, 'anonymous', 'foobar', req.remote_addr, spam=False)
 
         req = self.urlopen.requests[1]
         self.assertEqual('http://mykey.rest.akismet.com/1.1/submit-ham',
@@ -120,7 +120,7 @@ class AkismetFilterStrategyTestCase(unittest.TestCase):
         self.env.config.set('spam-filter', 'akismet_api_key', 'mykey')
 
         self.urlopen.responses = ['valid', '']
-        retval = self.strategy.train(req, 'anonymous', 'foobar', spam=True)
+        retval = self.strategy.train(req, 'anonymous', 'foobar', req.remote_addr, spam=True)
 
         req = self.urlopen.requests[1]
         self.assertEqual('http://mykey.rest.akismet.com/1.1/submit-spam',

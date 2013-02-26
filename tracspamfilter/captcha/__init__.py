@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2005-2006 Edgewall Software
+# Copyright (C) 2006 Edgewall Software
+# Copyright (C) 2006 Alec Thomas <alec@swapoff.org>
 # All rights reserved.
 #
 # This software is licensed as described in the file COPYING, which
@@ -10,7 +11,7 @@
 # This software consists of voluntary contributions made by many
 # individuals. For the exact contribution history, see the revision
 # history and logs, available at http://projects.edgewall.com/trac/.
+#
+# Author: Alec Thomas <alec@swapoff.org>
 
-from tracspamfilter.api import *
-from tracspamfilter.filtersystem import *
-from tracspamfilter.model import *
+from tracspamfilter.captcha.api import *
