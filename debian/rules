@@ -2,10 +2,10 @@
 
 get-orig-source:
 	set -e ; \
-		svn co http://svn.edgewall.com/repos/trac/sandbox/spam-filter trac-spamfilter-svn ; \
+		svn co http://svn.edgewall.com/repos/trac/plugins/1.0/spam-filter trac-spamfilter-svn ; \
 		REVISION=`svnversion trac-spamfilter-svn/` ; \
 		find trac-spamfilter-svn/ -depth -type d -name ".svn" -print0 | xargs -0 rm -rf ; \
-		tar cfz trac-spamfilter_0.2.1+svn$$REVISION.orig.tar.gz trac-spamfilter-svn/ ; \
+		tar cfz trac-spamfilter_0.7.3+svn$$REVISION.orig.tar.gz trac-spamfilter-svn/ ; \
 		rm -rf trac-spamfilter-svn/
 
 %:
