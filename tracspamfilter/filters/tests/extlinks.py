@@ -25,7 +25,7 @@ class ExternalLinksFilterStrategyTestCase(unittest.TestCase):
 
     def test_no_links(self):
         req = Mock(get_header=lambda x: {'Host': 'example.org'}.get(x))
-        retval = self.strategy.test(req, 'John Doe', 'Foo bar')
+        retval = self.strategy.test(req, 'John Doe', 'Foo bar', '127.0.0.1')
         self.assertEqual(None, retval)
 
     def test_few_ext_links(self):
@@ -33,7 +33,7 @@ class ExternalLinksFilterStrategyTestCase(unittest.TestCase):
         retval = self.strategy.test(req, 'John Doe', """
         <a href="http://spammers-site.com/fakehandbags">fakehandbags</a>
         <a href="http://spammers-site.com/fakewatches">fakewatches</a>
-        """)
+        """, '127.0.0.1')
         self.assertEqual(None, retval)
 
     def test_many_ext_links(self):
@@ -45,7 +45,7 @@ class ExternalLinksFilterStrategyTestCase(unittest.TestCase):
         <a href="http://spammers-site.com/fakewatches">fakewatches</a>
         <a href="http://spammers-site.com/fakehandbags">fakehandbags</a>
         <a href="http://spammers-site.com/fakewatches">fakewatches</a>
-        """)
+        """, '127.0.0.1')
         self.assertEqual(
             (-3, 'Maximum number of external links per post exceeded'),
             retval
@@ -60,7 +60,7 @@ class ExternalLinksFilterStrategyTestCase(unittest.TestCase):
         <a href="http://example.org/page2">bar</a>
         <a href="http://example.org/page1">foo</a>
         <a href="http://example.org/page2">bar</a>
-        """)
+        """, '127.0.0.1')
         self.assertEqual(None, retval)
 
     def test_many_ext_links_raw(self):
@@ -72,7 +72,7 @@ class ExternalLinksFilterStrategyTestCase(unittest.TestCase):
         http://spammers-site.com/fakewatches
         http://spammers-site.com/fakehandbags
         http://spammers-site.com/fakewatches
-        """)
+        """, '127.0.0.1')
         self.assertEqual(
             (-3, 'Maximum number of external links per post exceeded'),
             retval
@@ -87,7 +87,7 @@ class ExternalLinksFilterStrategyTestCase(unittest.TestCase):
         [url=http://spammers-site.com/fakewatches]fakewatches[/url]
         [url=http://spammers-site.com/fakehandbags]fakehandbags[/url]
         [url=http://spammers-site.com/fakewatches]fakewatches[/url]
-        """)
+        """, '127.0.0.1')
         self.assertEqual(
             (-3, 'Maximum number of external links per post exceeded'),
             retval

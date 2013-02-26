@@ -16,7 +16,11 @@
 # Author: Matthew Good <trac@matt-good.net>
 #         Christopher Lenz <cmlenz@gmx.de>
 
+def is_python27():
+    return sys.version_info[0] > 2 or (sys.version_info[0] == 2 and sys.version_info[1] >= 7)
+
 from email.Utils import parseaddr
+import sys
 from urllib import urlencode
 import urllib2
 from pkg_resources import get_distribution
@@ -27,9 +31,8 @@ from trac.core import *
 from trac.mimeview.api import is_binary
 from tracspamfilter.api import IFilterStrategy, N_
 
-
-class AkismetFilterStrategy(Component):
-    """Spam filter using the Akismet service (http://akismet.com/).
+class TypePadFilterStrategy(Component):
+    """Spam filter using the TypePad service (http://antispam.typepad.com/).
     
     Based on the `akismet` Python module written by Michael Ford:
       http://www.voidspace.org.uk/python/modules.shtml#akismet
@@ -39,16 +42,15 @@ class AkismetFilterStrategy(Component):
     noheaders = ['HTTP_COOKIE', 'HTTP_HOST', 'HTTP_REFERER','HTTP_USER_AGENT',
                  'HTTP_AUTHORIZATION']
 
-    karma_points = IntOption('spam-filter', 'akismet_karma', '5',
-        """By how many points an Akismet reject impacts the overall karma of
-        a submission.""", doc_domain = "tracspamfilter")
+    karma_points = IntOption('spam-filter', 'typepad_karma', '5',
+        """By how many points an TypePad reject impacts the overall karma of
+        a submission.""", doc_domain="tracspamfilter")
 
-    api_key = Option('spam-filter', 'akismet_api_key', '',
-        """Wordpress key required to use the Akismet API.""",
-        doc_domain = "tracspamfilter")
+    api_key = Option('spam-filter', 'typepad_api_key', '',
+        """TypePad key required to use the TypePad AntiSpam API.""", doc_domain="tracspamfilter")
 
-    api_url = Option('spam-filter', 'akismet_api_url', 'rest.akismet.com/1.1/',
-        """URL of the Akismet service.""", doc_domain = "tracspamfilter")
+    api_url = Option('spam-filter', 'typepad_api_url', 'api.antispam.typepad.com/1.1/',
+        """URL of the TypePad service.""", doc_domain="tracspamfilter")
 
     user_agent = 'Trac/%s | SpamFilter/%s'  % (
         TRAC_VERSION, get_distribution('TracSpamFilter').version
@@ -61,21 +63,21 @@ class AkismetFilterStrategy(Component):
 
     def is_external(self):
         return True
-            
+
     def test(self, req, author, content, ip):
         if not self._check_preconditions(req, author, content):
             return
 
         try:
             url = 'http://%s.%scomment-check' % (self.api_key, self.api_url)
-            self.log.debug('Checking content with Akismet service at %s', url)
+            self.log.debug('Checking content with TypePad service at %s', url)
             resp = self._post(url, req, author, content, ip)
-            if resp.strip().lower() != 'false':
-                self.log.debug('Akismet says content is spam')
-                return -abs(self.karma_points), N_('Akismet says content is spam')
+            if resp != None and resp.strip().lower() != 'false':
+                self.log.debug('TypePad says content is spam')
+                return -abs(self.karma_points), N_('TypePad says content is spam')
 
         except urllib2.URLError, e:
-            self.log.warn('Akismet request failed (%s)', e)
+            self.log.warn('TypePad request failed (%s)', e)
 
     def train(self, req, author, content, ip, spam=True):
         if not self._check_preconditions(req, author, content):
@@ -84,11 +86,11 @@ class AkismetFilterStrategy(Component):
         try:
             which = spam and 'spam' or 'ham'
             url = 'http://%s.%ssubmit-%s' % (self.api_key, self.api_url, which)
-            self.log.debug('Submitting %s to Akismet service at %s', which, url)
+            self.log.debug('Submitting %s to TypePad service at %s', which, url)
             self._post(url, req, author, content, ip)
 
         except urllib2.URLError, e:
-            self.log.warn('Akismet request failed (%s)', e)
+            self.log.warn('TypePad request failed (%s)', e)
 
     # Internal methods
 
@@ -97,20 +99,20 @@ class AkismetFilterStrategy(Component):
             return False
 
         if not self.api_key:
-            self.log.warning('Akismet API key is missing')
+            self.log.warning('TypePad API key is missing')
             return False
 
         if is_binary(content):
-            self.log.warning('Content is binary, Akismet content check skipped')
+            self.log.warning('Content is binary, TypePad content check skipped')
             return False
 
         try:
             if not self.verify_key(req):
-                self.log.warning('Akismet API key is invalid')
+                self.log.warning('TypePad API key is invalid')
                 return False
             return True
         except urllib2.URLError, e:
-            self.log.warn('Akismet request failed (%s)', e)
+            self.log.warn('TypePad request failed (%s)', e)
 
     def verify_key(self, req, api_url=None, api_key=None):
         if api_url is None:
@@ -119,16 +121,22 @@ class AkismetFilterStrategy(Component):
             api_key = self.api_key
 
         if api_key != self.verified_key:
-            self.log.debug('Verifying Akismet API key')
+            self.log.debug('Verifying TypePad API key')
             params = {'blog': req.base_url, 'key': api_key}
             req = urllib2.Request('http://%sverify-key' % api_url,
                                   urlencode(params),
                                   {'User-Agent' : self.user_agent})
-            resp = urllib2.urlopen(req).read()
-            if resp.strip().lower() == 'valid':
-                self.log.debug('Akismet API key is valid')
-                self.verified = True
-                self.verified_key = api_key
+            try:
+                if is_python27():
+                    resp = urllib2.urlopen(req, None, 3).read()
+                else:
+                    resp = urllib2.urlopen(req).read()
+                if resp.strip().lower() == 'valid':
+                    self.log.debug('TypePad API key is valid')
+                    self.verified = True
+                    self.verified_key = api_key
+            except:
+                pass
 
         return self.verified_key is not None
 
@@ -156,6 +164,11 @@ class AkismetFilterStrategy(Component):
         urlreq = urllib2.Request(url, urlencode(params),
                               {'User-Agent' : self.user_agent})
 
-        #self.log.warn('AkismetPOST2 %s URL %s', urlencode(params), url)
-        resp = urllib2.urlopen(urlreq)
-        return resp.read()
+        try:
+            if is_python27():
+                resp = urllib2.urlopen(urlreq, None, 3)
+            else:
+                resp = urllib2.urlopen(urlreq)
+            return resp.read()
+        except:
+            return None

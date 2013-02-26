@@ -14,13 +14,13 @@
 #
 # Author: Matthew Good <trac@matt-good.net>
 
+from dns.name import from_text
 from dns.resolver import query, Timeout, NXDOMAIN, NoAnswer, NoNameservers
 
 from trac.config import ListOption, IntOption
 from trac.core import *
 from trac.util import reversed
-from tracspamfilter.api import IFilterStrategy
-
+from tracspamfilter.api import IFilterStrategy, N_
 
 class IPBlacklistFilterStrategy(Component):
     """Spam filter based on IP blacklistings.
@@ -31,40 +31,65 @@ class IPBlacklistFilterStrategy(Component):
 
     karma_points = IntOption('spam-filter', 'ip_blacklist_karma', '5',
         """By how many points blacklisting by a single server impacts the
-        overall karma of a submission.""")
+        overall karma of a submission.""", doc_domain="tracspamfilter")
 
     servers = ListOption('spam-filter', 'ip_blacklist_servers',
-                         'bsb.empty.us, sc.surbl.org', doc=
-        """Servers used for IP blacklisting.""")
+                         'list.blogspambl.com, all.s5h.net, dnsbl.tornevall.org', doc=
+        """Servers used for IP blacklisting.""", doc_domain="tracspamfilter")
 
     # IFilterStrategy implementation
 
-    def test(self, req, author, content):
+    def is_external(self):
+        return True
+
+    def test(self, req, author, content, ip):
+        if not self._check_preconditions(req, author, content, ip):
+            return
+
         if not self.servers:
             self.log.warning('No IP blacklist servers configured')
             return
 
-        self.log.debug('Checking for IP blacklisting on "%s"' % req.remote_addr)
+        self.log.debug('Checking for IP blacklisting on "%s"' % ip)
 
         points = 0
         servers = []
 
-        prefix = '.'.join(reversed(req.remote_addr.split('.'))) + '.'
+        prefix = '.'.join(reversed(ip.split('.'))) + '.'
         for server in self.servers:
+            self.log.debug("Checking blacklist %s for %s" % (server, ip))
             try:
-                query(prefix + server.encode('utf-8'))
+                res = query(from_text(prefix + server.encode('utf-8')))[0].to_text()
+                points -= abs(self.karma_points)
+                if res == "127.0.0.1":
+                    servers.append(server)
+                else:
+                    # strip the common part of responses
+                    if res.startswith("127.0.0."):
+                      res = res[8:]
+                    elif res.startswith("127."):
+                      res = res[4:]
+                    servers.append("%s [%s]" %(server, res))
             except NXDOMAIN: # not blacklisted on this server
                 continue
             except (Timeout, NoAnswer, NoNameservers), e:
                 self.log.warning('Error checking IP blacklist server "%s" for '
-                                 'IP "%s": %s' % (server, req.remote_addr, e))
-            else:
-                points -= abs(self.karma_points)
-                servers.append(server)
+                                 'IP "%s": %s' % (server, ip, e))
 
         if points != 0:
-            return points, 'IP %s blacklisted by %s' % (req.remote_addr,
-                                                        ', '.join(servers))
+            return points, N_('IP %s blacklisted by %s'), ip, ', '.join(servers)
 
-    def train(self, req, author, content, spam=True):
+    def train(self, req, author, content, ip, spam=True):
         pass
+
+    # Internal methods
+
+    def _check_preconditions(self, req, author, content,ip):
+        if self.karma_points == 0:
+            return False
+        
+        # IPV4 address ?
+        if ip.find(".") < 0:
+            return False
+
+        return True

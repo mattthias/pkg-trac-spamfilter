@@ -1,0 +1,1551 @@
+# German translations for TracSpamFilter.
+# Copyright (C) 2012 ORGANIZATION
+# This file is distributed under the same license as the TracSpamFilter
+# project.
+# Dirk Stöcker <trac@dstoecker.de>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: TracSpamFilter 0.7.0\n"
+"Report-Msgid-Bugs-To: trac@dstoecker.de\n"
+"POT-Creation-Date: 2013-02-03 14:26+0100\n"
+"PO-Revision-Date: 2012-09-26 20:48+0200\n"
+"Last-Translator: Dirk Stöcker <trac@dstoecker.de>\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: tracspamfilter/accountadapter.py:33
+msgid "Details:"
+msgstr "Details:"
+
+#: tracspamfilter/adapters.py:106
+msgid ""
+"The maximum number of bytes from an attachment to pass through\n"
+"the spam filters."
+msgstr ""
+"Die maximale Anzahl von Bytes eines Anhanges, welcher durch den "
+"Spamfilter geschickt werden soll."
+
+#: tracspamfilter/admin.py:68
+msgid "How many monitor entries are displayed by default (between 5 and 1000)."
+msgstr ""
+"Wie viele Monitoreinträge werden standardmäßig angezeigt (zwischen 5 und "
+"1000)."
+
+#: tracspamfilter/admin.py:76 tracspamfilter/admin.py:79
+#: tracspamfilter/admin.py:316 tracspamfilter/admin.py:448
+#: tracspamfilter/admin.py:513
+msgid "Spam Filtering"
+msgstr "Spamfilter"
+
+#: tracspamfilter/admin.py:77 tracspamfilter/templates/admin_bayes.html:24
+msgid "Configuration"
+msgstr "Einstellungen"
+
+#: tracspamfilter/admin.py:80
+msgid "Monitoring"
+msgstr "Überwachung"
+
+#: tracspamfilter/admin.py:230
+msgid "Previous Page"
+msgstr "Vorige Seite"
+
+#: tracspamfilter/admin.py:234
+msgid "Next Page"
+msgstr "Nächste Seite"
+
+#: tracspamfilter/admin.py:250
+msgid "Log entry not found"
+msgstr "Logeintrag nicht gefunden"
+
+#: tracspamfilter/admin.py:255 tracspamfilter/admin.py:260
+#, python-format
+msgid "Log Entry %d"
+msgstr "Logeintrag %d"
+
+#: tracspamfilter/admin.py:256
+msgid "Log Entry List"
+msgstr "Logliste"
+
+#: tracspamfilter/admin.py:316
+msgid "External"
+msgstr "Extern"
+
+#: tracspamfilter/admin.py:448 tracspamfilter/templates/admin_bayes.html:10
+msgid "Bayes"
+msgstr "Bayes"
+
+#: tracspamfilter/admin.py:490
+#, python-format
+msgid "(ratio %.1f : 1)"
+msgstr "(Rate %.1f : 1)"
+
+#: tracspamfilter/admin.py:492
+#, python-format
+msgid "(ratio 1 : %.1f)"
+msgstr "(Rate 1 : %.1f)"
+
+#: tracspamfilter/admin.py:513
+msgid "Captcha"
+msgstr "Captcha"
+
+#: tracspamfilter/admin.py:553
+msgid "Lifetime has invalid value"
+msgstr "Lebenszeit hat ungültigen Wert"
+
+#: tracspamfilter/admin.py:559
+msgid "Text values are not numeric"
+msgstr "Textwerte sind nicht numerisch"
+
+#: tracspamfilter/admin.py:566
+msgid "Numeric image values are no numbers"
+msgstr "Numerische Bildwerte sind keine Zahlen"
+
+#: tracspamfilter/admin.py:571 tracspamfilter/admin.py:579
+msgid "The keys are invalid"
+msgstr "Die Schlüssel sind ungültig"
+
+#: tracspamfilter/admin.py:575
+msgid "The key or user id are invalid"
+msgstr "Die Schlüssel oder die Nutzerkennung sind ungültig"
+
+#: tracspamfilter/filtersystem.py:55
+msgid "The minimum score required for a submission to be allowed."
+msgstr "Der minimal nötige Wert für eine erlaubte Übertragung."
+
+#: tracspamfilter/filtersystem.py:59
+msgid ""
+"The karma given to authenticated users, in case\n"
+"`trust_authenticated` is false."
+msgstr ""
+"Das Karma, welches angemeldeten Nutzern gegeben wird, wenn\n"
+"`trust_authenticated` nicht gesetzt ist."
+
+#: tracspamfilter/filtersystem.py:63
+msgid ""
+"Whether all content submissions and spam filtering activity should\n"
+"be logged to the database."
+msgstr ""
+"Legt fest, ob alle Übertragungen und Spamfilteraktivitäten in der\n"
+"Datenbank aufgezeichnet werden."
+
+#: tracspamfilter/filtersystem.py:67
+msgid "The number of days after which log entries should be purged."
+msgstr "Die Anzahl an Tagen, nach denen Aufzeichnungen gelöscht werden."
+
+#: tracspamfilter/filtersystem.py:71
+msgid "Allow usage of external services."
+msgstr "Nutzung externer Dienste erlauben."
+
+#: tracspamfilter/filtersystem.py:74
+msgid "Allow training of external services."
+msgstr "Training externer Dienste erlauben."
+
+#: tracspamfilter/filtersystem.py:77
+msgid ""
+"Whether content submissions by authenticated users should be trusted\n"
+"without checking for potential spam or other abuse."
+msgstr ""
+"Legt fest, ob Übertragungen von angemeldeten Nutzern ohne Prüfung\n"
+"auf Spam oder Missbrauch vertraut werden soll."
+
+#: tracspamfilter/filtersystem.py:83
+msgid "The karma given to attachments."
+msgstr "Das an Anhänge vergebene Karma."
+
+#: tracspamfilter/filtersystem.py:86
+msgid "The handler used to reject content."
+msgstr "Die Bearbeitungsroutine für zurückgewiesene Inhalte."
+
+#: tracspamfilter/filtersystem.py:90
+msgid "Interpret X-Forwarded-For header for IP checks."
+msgstr "Die Kopfzeile X-Forwarded-For für IP-Prüfungen nutzen."
+
+#: tracspamfilter/filtersystem.py:145
+msgid "User is authenticated"
+msgstr "Nutzer ist angemeldet"
+
+#: tracspamfilter/filtersystem.py:150
+msgid "Attachment weighting"
+msgstr "Bewertung von Anhängen"
+
+#: tracspamfilter/filtersystem.py:216
+#, python-format
+msgid "Submission rejected as potential spam %(message)s"
+msgstr "Übertragung wird als potentieller Spam zurückgewiesen %(message)s"
+
+#: tracspamfilter/captcha/api.py:48
+msgid "CAPTCHA method to use for verifying humans."
+msgstr "Captcha-Methode zur Erkennung von Menschen."
+
+#: tracspamfilter/captcha/api.py:52
+msgid ""
+"By how many points a successful CAPTCHA response increases the\n"
+"overall score."
+msgstr ""
+"Punktanzahl mit der eine eine erfolgreiche Captcha-Antwort das\n"
+"Gesamtkarma beeinflusst."
+
+#: tracspamfilter/captcha/api.py:56
+msgid ""
+"Time in seconds that a successful CAPTCHA response increases\n"
+"karma."
+msgstr ""
+"Zeit in Sekunden, in welcher eine erfolgreiche Captcha-Antwort\n"
+"das Karma erhöht."
+
+#: tracspamfilter/captcha/api.py:60
+msgid "Time in seconds before CAPTCHA is removed."
+msgstr "Zeit in Sekunden, bevor ein Captcha gelöscht wird."
+
+#: tracspamfilter/captcha/api.py:63
+msgid "Time in seconds before database cleanup is called."
+msgstr "Zeit in Sekunden, bevor die Datenbank aufgeräumt wird."
+
+#: tracspamfilter/captcha/api.py:73
+msgid "Human verified via CAPTCHA"
+msgstr "Durch Captcha verifizierter Mensch"
+
+#: tracspamfilter/captcha/api.py:102
+msgid "CAPTCHA failed to handle original request"
+msgstr "Captcha konnte Originalanfrage nicht bearbeiten"
+
+#: tracspamfilter/captcha/api.py:104
+msgid "CAPTCHA verification failed"
+msgstr "Captcha-Prüfung fehlgeschlagen"
+
+#: tracspamfilter/captcha/areyouahuman.py:32
+msgid "Publisher key for AreYouAHuman usage."
+msgstr "Publisher-Schlüssel für AreYouAHuman-Nutzung."
+
+#: tracspamfilter/captcha/areyouahuman.py:35
+msgid "Scoring key for AreYouAHuman usage."
+msgstr "Scoring-Schlüssel for AreYouAHuman-Nutzung."
+
+#: tracspamfilter/captcha/areyouahuman.py:38
+msgid "Host name for AreYouAHuman usage."
+msgstr "Hostname für AreYouAHuman-Nutzung."
+
+#: tracspamfilter/captcha/expression.py:33
+msgid "Number of terms in numeric CAPTCHA expression."
+msgstr "Anzahl von Termen in einem numerischen Captcha-Ausdruck."
+
+#: tracspamfilter/captcha/expression.py:37
+msgid ""
+"Maximum value of individual terms in numeric CAPTCHA\n"
+"expression."
+msgstr ""
+"Höchster Wert eines einzelnen Terms in einem numerischen\n"
+"Captcha-Ausdruck."
+
+#: tracspamfilter/captcha/expression.py:41
+msgid "multiplied by"
+msgstr "multipliziert mit"
+
+#: tracspamfilter/captcha/expression.py:41
+msgid "minus"
+msgstr "minus"
+
+#: tracspamfilter/captcha/expression.py:42
+msgid "plus"
+msgstr "plus"
+
+#: tracspamfilter/captcha/expression.py:44
+msgid "zero"
+msgstr "Null"
+
+#: tracspamfilter/captcha/expression.py:44
+msgid "one"
+msgstr "Eins"
+
+#: tracspamfilter/captcha/expression.py:44
+msgid "two"
+msgstr "Zwei"
+
+#: tracspamfilter/captcha/expression.py:44
+msgid "three"
+msgstr "Drei"
+
+#: tracspamfilter/captcha/expression.py:44
+msgid "four"
+msgstr "Vier"
+
+#: tracspamfilter/captcha/expression.py:45
+msgid "five"
+msgstr "Fünf"
+
+#: tracspamfilter/captcha/expression.py:45
+msgid "six"
+msgstr "Sechs"
+
+#: tracspamfilter/captcha/expression.py:45
+msgid "seven"
+msgstr "Sieben"
+
+#: tracspamfilter/captcha/expression.py:45
+msgid "eight"
+msgstr "Acht"
+
+#: tracspamfilter/captcha/expression.py:46
+msgid "nine"
+msgstr "Neun"
+
+#: tracspamfilter/captcha/expression.py:46
+msgid "ten"
+msgstr "Zehn"
+
+#: tracspamfilter/captcha/expression.py:46
+msgid "eleven"
+msgstr "Elf"
+
+#: tracspamfilter/captcha/expression.py:46
+msgid "twelve"
+msgstr "Zwölf"
+
+#: tracspamfilter/captcha/expression.py:47
+msgid "thirteen"
+msgstr "Dreizehn"
+
+#: tracspamfilter/captcha/expression.py:47
+msgid "fourteen"
+msgstr "Vierzehn"
+
+#: tracspamfilter/captcha/expression.py:47
+msgid "fifteen"
+msgstr "Fünfzehn"
+
+#: tracspamfilter/captcha/expression.py:48
+msgid "sixteen"
+msgstr "Sechzehn"
+
+#: tracspamfilter/captcha/expression.py:48
+msgid "seventeen"
+msgstr "Siebzehn"
+
+#: tracspamfilter/captcha/expression.py:48
+msgid "eighteen"
+msgstr "Achtzehn"
+
+#: tracspamfilter/captcha/expression.py:49
+msgid "nineteen"
+msgstr "Neunzehn"
+
+#. TRANSLATOR: if compound numbers like in english are not
+#. supported, simply add a "plus" command to the following
+#. translations!
+#: tracspamfilter/captcha/expression.py:54
+msgid "twenty"
+msgstr "Zwanzig plus"
+
+#: tracspamfilter/captcha/expression.py:54
+msgid "thirty"
+msgstr "Dreißig plus"
+
+#: tracspamfilter/captcha/expression.py:54
+msgid "forty"
+msgstr "Vierzig plus"
+
+#: tracspamfilter/captcha/expression.py:54
+msgid "fifty"
+msgstr "Fünfzig plus"
+
+#: tracspamfilter/captcha/expression.py:55
+msgid "sixty"
+msgstr "Sechzig plus"
+
+#: tracspamfilter/captcha/expression.py:55
+msgid "seventy"
+msgstr "Siebzig plus"
+
+#: tracspamfilter/captcha/expression.py:55
+msgid "eighty"
+msgstr "Achtzig plus"
+
+#: tracspamfilter/captcha/expression.py:55
+msgid "ninety"
+msgstr "Neunzig plus"
+
+#: tracspamfilter/captcha/expression.py:62
+msgid "Numeric captcha can not represent numbers > 100"
+msgstr "Numerische Captcha kann keine Zahlen größer 100 nutzen"
+
+#: tracspamfilter/captcha/image.py:41
+msgid "Set of fonts to choose from when generating image CAPTCHA."
+msgstr "Liste von Schriftarten für die Erzeugung des Bildcaptchas."
+
+#: tracspamfilter/captcha/image.py:44
+msgid "Font size to use in image CAPTCHA."
+msgstr "Schriftgröße in einem Bildcaptcha."
+
+#: tracspamfilter/captcha/image.py:47
+msgid "Alphabet to choose image CAPTCHA challenge from."
+msgstr "Alphabet, aus dem die Captcha-Frage eines Bildcaptchas besteht."
+
+#: tracspamfilter/captcha/image.py:51
+msgid "Number of letters to use in image CAPTCHA challenge."
+msgstr "Anzahl von Buchstaben in der Bildcaptcha-Frage."
+
+#: tracspamfilter/captcha/keycaptcha.py:33
+msgid "Private key for KeyCaptcha usage."
+msgstr "Privater Schlüssel for KeyCaptcha-Nutzung."
+
+#: tracspamfilter/captcha/keycaptcha.py:36
+msgid "User id for KeyCaptcha usage."
+msgstr "Nutzerkennung für KeyCaptcha-Nutzung."
+
+#: tracspamfilter/captcha/recaptcha.py:32
+msgid "Private key for reCaptcha usage."
+msgstr "Privater Schlüssel for reCaptcha-Nutzung."
+
+#: tracspamfilter/captcha/recaptcha.py:35
+msgid "Public key for reCaptcha usage."
+msgstr "Öffentlicher Schlüssel für reCaptcha-Nutzung."
+
+#: tracspamfilter/filters/akismet.py:42
+msgid ""
+"By how many points an Akismet reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+"Punktanzahl mit der eine Akismet-Ablehnung das Gesamtkarma\n"
+"einer Übertragung beeinflusst."
+
+#: tracspamfilter/filters/akismet.py:46
+msgid "Wordpress key required to use the Akismet API."
+msgstr "Ein Wordpress-Schlüssel wird zur Nutzung des Akismet-API benötigt."
+
+#: tracspamfilter/filters/akismet.py:50
+msgid "URL of the Akismet service."
+msgstr "URL des Akismet-Dienstes."
+
+#: tracspamfilter/filters/akismet.py:75
+msgid "Akismet says content is spam"
+msgstr "Akismet bezeichnet den Inhalt als Spam"
+
+#: tracspamfilter/filters/bayes.py:39
+msgid ""
+"By what factor Bayesian spam probability score affects the overall\n"
+"karma of a submission."
+msgstr ""
+"Punktanzahl mit der die Bayes-Spamwahrscheinlichkeit das Gesamtkarma\n"
+"einer Übertragung beeinflusst."
+
+#: tracspamfilter/filters/bayes.py:43
+msgid ""
+"The minimum number of submissions in the training database required\n"
+"for the filter to start impacting the karma of submissions."
+msgstr ""
+"Die Minimalzahl an Übertragungen in der Trainingsdatenbank, bevor\n"
+"der Filter das Karma von Übertragungen beeinflusst."
+
+#: tracspamfilter/filters/bayes.py:78
+#, python-format
+msgid "SpamBayes determined spam probability of %.2f%%"
+msgstr "SpamBayes hat eine Spamwahrscheinlichkeit von %.2f%% ermittelt."
+
+#: tracspamfilter/filters/blogspam.py:32
+msgid ""
+"By how many points an BlogSpam reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+"Punktanzahl mit der eine BlogSpam-Ablehnung das Gesamtkarma\n"
+"einer Übertragung beeinflusst."
+
+#: tracspamfilter/filters/blogspam.py:36
+msgid "URL of the BlogSpam service."
+msgstr "URL des BlogSpam-Dienstes."
+
+#: tracspamfilter/filters/blogspam.py:39
+msgid "Comma separated list of tests to skip."
+msgstr "Kommagetrennte Liste von zu überspringenden Tests."
+
+#: tracspamfilter/filters/blogspam.py:59
+#, python-format
+msgid "BlogSpam says content is spam (%s)"
+msgstr "BlogSpam bezeichnet den Inhalt als Spam (%s)"
+
+#: tracspamfilter/filters/botscout.py:31
+msgid ""
+"By how many points a BotScout reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+"Punktanzahl mit der eine BotScout-Ablehnung das Gesamtkarma\n"
+"einer Übertragung beeinflusst."
+
+#: tracspamfilter/filters/botscout.py:35
+msgid "API key required to use BotScout."
+msgstr "Für BotScout benötigter API-Schlüssel."
+
+#: tracspamfilter/filters/botscout.py:61
+#, python-format
+msgid "BotScout says this is spam (%s)"
+msgstr "BotScout bezeichnet dies als Spam (%s)"
+
+#: tracspamfilter/filters/defensio.py:44
+msgid ""
+"By how many points a Defensio reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+"Punktanzahl mit der eine Defensio-Ablehnung das Gesamtkarma\n"
+"einer Übertragung beeinflusst."
+
+#: tracspamfilter/filters/defensio.py:48
+msgid "Defensio key required to use the API."
+msgstr "Schlüssel zur Benutzung des Defensio-API."
+
+#: tracspamfilter/filters/defensio.py:51
+msgid "URL of the Defensio service."
+msgstr "URL des Defensio-Dienstes."
+
+#: tracspamfilter/filters/defensio.py:84
+#, python-format
+msgid "Defensio says content is not allowed (%s, %s, %s)"
+msgstr "Defensio bezeichnet den Inhalt als nicht erlaubt (%s, %s, %s)"
+
+#: tracspamfilter/filters/defensio.py:90
+#, python-format
+msgid "Defensio says content is allowed (%s, %s, %s)"
+msgstr "Defensio bezeichnet den Inhalt als erlaubt (%s, %s, %s)"
+
+#: tracspamfilter/filters/extlinks.py:28
+msgid ""
+"By how many points too many external links in a submission impact\n"
+"the overall score."
+msgstr ""
+"Punktanzahl mit der zu viele extern Links das Gesamtkarma\n"
+"einer Übertragung beeinflussen."
+
+#: tracspamfilter/filters/extlinks.py:32
+msgid ""
+"The maximum number of external links allowed in a submission until\n"
+"that submission gets negative karma."
+msgstr ""
+"Die Maximalzahl an erlaubten externen Links in einer Übertragung,\n"
+"bevor ein negatives Karma entsteht."
+
+#: tracspamfilter/filters/extlinks.py:36
+msgid "List of domains that should be allowed in external links"
+msgstr "Liste von Domainnamen, welche in externen Links erlaubt sind"
+
+#: tracspamfilter/filters/extlinks.py:63
+msgid "Maximum number of external links per post exceeded"
+msgstr "Anzahl von externen Links pro Übertragung überschritten"
+
+#: tracspamfilter/filters/extlinks.py:66
+msgid "External links in post found"
+msgstr "Externe Links in Übertragung gefunden"
+
+#: tracspamfilter/filters/fspamlist.py:32
+msgid ""
+"By how many points a FSpamList reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+"Punktanzahl mit der eine FSpamList-Ablehnung das Gesamtkarma\n"
+"einer Übertragung beeinflusst."
+
+#: tracspamfilter/filters/fspamlist.py:36
+msgid "API key required to use FSpamList."
+msgstr "Für FSpamList benötigter API-Schlüssel."
+
+#: tracspamfilter/filters/fspamlist.py:67
+#, python-format
+msgid "FSpamList says this is spam (%s)"
+msgstr "FSpamList bezeichnet dies als Spam (%s)"
+
+#: tracspamfilter/filters/httpbl.py:33
+msgid ""
+"By how many points listing as \"comment spammer\" impacts the\n"
+"overall karma of a submission."
+msgstr ""
+"Punktanzahl mit der eine Eintragung als \"Kommentarspammer\" das\n"
+"Gesamtkarma einer Übertragung beeinflusst."
+
+#: tracspamfilter/filters/httpbl.py:37
+msgid "Http:BL API key required for use."
+msgstr "Für Http:BL benötigter API-Schlüssel."
+
+#: tracspamfilter/filters/httpbl.py:76
+#, python-format
+msgid "IP %s blacklisted by Http:BL"
+msgstr "IP %s ist in der schwarzen Liste von Http:BL"
+
+#: tracspamfilter/filters/ip_blacklist.py:32
+msgid ""
+"By how many points blacklisting by a single server impacts the\n"
+"overall karma of a submission."
+msgstr ""
+"Punktanzahl mit der ein Eintrag auf der schwarzen Liste eines\n"
+"Servers das Gesamtkarma einer Übertragung beeinflusst."
+
+#: tracspamfilter/filters/ip_blacklist.py:36
+msgid "Servers used for IP blacklisting."
+msgstr "Server mit schwarzen Listen für IP-Adressen."
+
+#: tracspamfilter/filters/ip_blacklist.py:80
+#, python-format
+msgid "IP %s blacklisted by %s"
+msgstr "IP %s ist in der schwarzen Liste von %s"
+
+#: tracspamfilter/filters/ip_regex.py:34
+msgid ""
+"By how many points a match with a pattern on the BadIP page\n"
+"impacts the overall karma of a submission."
+msgstr ""
+"Punktanzahl mit der eine Übereinstimmung mit einem Eintrag auf\n"
+"der BadIP-Seite das Gesamtkarma einer Übertragung beeinflusst."
+
+#: tracspamfilter/filters/ip_regex.py:37
+msgid ""
+"Local file to be loaded to get BadIP. Can be used in\n"
+"addition to BadIP wiki page."
+msgstr ""
+"Lokale Datei, welche unerwünschte IP-Daten enthält.\n"
+"Kann zusätzlich zur BadIP-Wikiseite genutzt werden."
+
+#: tracspamfilter/filters/ip_regex.py:40
+msgid "Show the matched bad IP patterns in rejection message."
+msgstr ""
+"Zeige übereinstimmende Muster der unerwünschten IP-Adressen in der "
+"Abweisungsnachricht."
+
+#: tracspamfilter/filters/ip_regex.py:76
+#, python-format
+msgid "IP catched by these blacklisted patterns: %s"
+msgstr "IP wurde von folgenden Mustern der schwarzen Liste getroffen: %s"
+
+#: tracspamfilter/filters/ip_regex.py:78
+#, python-format
+msgid "IP catched by %d blacklisted patterns"
+msgstr "IP wurde von %d Mustern der schwarzen Liste getroffen"
+
+#: tracspamfilter/filters/ip_throttle.py:27
+msgid ""
+"By how many points exceeding the configured maximum number of posts\n"
+"per hour impacts the overall score."
+msgstr ""
+"Punktanzahl mit der eine Überschreitung der maximalen Anzahl an\n"
+"Übertragungen je Stunde das Gesamtkarma einer Übertragung beeinflusst."
+
+#: tracspamfilter/filters/ip_throttle.py:31
+msgid ""
+"The maximum allowed number of submissions per hour form a single IP\n"
+"address. If this limit is exceeded, subsequent permissions get negative\n"
+"karma."
+msgstr ""
+
+#: tracspamfilter/filters/ip_throttle.py:52
+msgid "Maximum number of posts per hour for this IP exceeded"
+msgstr "Maximale Anzahl an Übertragungen je Stunde für diese IP überschritten"
+
+#: tracspamfilter/filters/linksleeve.py:29
+msgid ""
+"By how many points a LinkSleeve reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+
+#: tracspamfilter/filters/linksleeve.py:47
+msgid "LinkSleeve says this is spam"
+msgstr "LinkSleeve bezeichnet dies als Spam"
+
+#: tracspamfilter/filters/regex.py:31
+msgid ""
+"By how many points a match with a pattern on the BadContent page\n"
+"impacts the overall karma of a submission."
+msgstr ""
+
+#: tracspamfilter/filters/regex.py:34
+msgid ""
+"Local file to be loaded to get BadContent. Can be used in\n"
+"addition to BadContent wiki page."
+msgstr ""
+
+#: tracspamfilter/filters/regex.py:37
+msgid "Show the matched bad content patterns in rejection message."
+msgstr ""
+
+#: tracspamfilter/filters/regex.py:77
+#, python-format
+msgid "Content contained these blacklisted patterns: %s"
+msgstr "Enthält diese Muster der schwarzen Liste: %s"
+
+#: tracspamfilter/filters/regex.py:79
+#, python-format
+msgid "Content contained %d blacklisted patterns"
+msgstr "Enthält %d Muster der schwarzen Liste"
+
+#: tracspamfilter/filters/registration.py:27
+msgid ""
+"By how many points a failed registration check impacts\n"
+"the overall score."
+msgstr ""
+"Punktanzahl mit der eine fehlgeschlagene Registrierprüfung das\n"
+"Gesamtkarma beeinflusst."
+
+#: tracspamfilter/filters/registration.py:31
+msgid "Replace checks in account manager totally."
+msgstr ""
+
+#: tracspamfilter/filters/registration.py:77
+#, python-format
+msgid "Account registration failed (%s), "
+msgstr ""
+
+#: tracspamfilter/filters/session.py:26
+msgid ""
+"By how many points an existing and configured session improves the\n"
+"overall karma of the submission. A third of the points is granted for\n"
+"having an existing session at all, the other two thirds are granted\n"
+"when the user has his name and/or email address set in the session,\n"
+"respectively."
+msgstr ""
+
+#: tracspamfilter/filters/session.py:48
+msgid "Existing session found"
+msgstr "Existierende Sitzung gefunden"
+
+#: tracspamfilter/filters/spambusted.py:30
+msgid ""
+"By how many points a SpamBusted reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+
+#: tracspamfilter/filters/spambusted.py:34
+#: tracspamfilter/filters/stopforumspam.py:35
+msgid "API key used to report SPAM."
+msgstr "API-Schlüssel zum Melden von Spam."
+
+#: tracspamfilter/filters/spambusted.py:52
+msgid "SpamBusted says this is spam"
+msgstr "SpamBusted bezeichnet dies als Spam"
+
+#: tracspamfilter/filters/spamwipe.py:30
+msgid ""
+"By how many points an SpamWipe reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+
+#: tracspamfilter/filters/spamwipe.py:34
+msgid "API key required to use the SpamWipe API."
+msgstr "Zur Nutzung von SpamWipe benötigter API-Schlüssel."
+
+#: tracspamfilter/filters/spamwipe.py:61
+msgid "SpamWipe says content is ham"
+msgstr "SpamWipe bezeichnet den Inhalt als Ham"
+
+#: tracspamfilter/filters/spamwipe.py:64
+msgid "SpamWipe says content is spam"
+msgstr "SpamWipe bezeichnet den Inhalt als Spam"
+
+#: tracspamfilter/filters/stopforumspam.py:31
+msgid ""
+"By how many points a StopForumSpam reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+
+#: tracspamfilter/filters/stopforumspam.py:63
+#, python-format
+msgid "StopForumSpam says this is spam (%s)"
+msgstr "StopForumSpam bezeichnet dies als Spam (%s)"
+
+#: tracspamfilter/filters/trapfield.py:28
+msgid ""
+"By how many points a trap reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+
+#: tracspamfilter/filters/trapfield.py:31
+msgid ""
+"Name of the invisible trap field, should contain some reference\n"
+"to e-mail for better results."
+msgstr ""
+
+#: tracspamfilter/filters/trapfield.py:34
+msgid ""
+"Name of the hidden trap field, should contain some reference\n"
+"to e-mail for better results."
+msgstr ""
+
+#: tracspamfilter/filters/trapfield.py:58
+#, python-format
+msgid "Both trap fields says this is spam (%s, %s)"
+msgstr "Beide Fallen-Felder bezeichnen dies als Spam (%s, %s)"
+
+#: tracspamfilter/filters/trapfield.py:61
+#, python-format
+msgid "Invisible trap field says this is spam (%s)"
+msgstr "Unsichtbares Fallen-Feld bezeichnet dies als Spam (%s)"
+
+#: tracspamfilter/filters/trapfield.py:64
+#, python-format
+msgid "Hidden trap field says this is spam (%s)"
+msgstr "Verstecktes Fallen-Feld bezeichnet dies als Spam (%s)"
+
+#: tracspamfilter/filters/typepad.py:45
+msgid ""
+"By how many points an TypePad reject impacts the overall karma of\n"
+"a submission."
+msgstr ""
+
+#: tracspamfilter/filters/typepad.py:49
+msgid "TypePad key required to use the TypePad AntiSpam API."
+msgstr ""
+
+#: tracspamfilter/filters/typepad.py:52
+msgid "URL of the TypePad service."
+msgstr "URL des TypePad-Dienstes."
+
+#: tracspamfilter/filters/typepad.py:77
+msgid "TypePad says content is spam"
+msgstr "TypePad bezeichnet den Inhalt als Spam"
+
+#: tracspamfilter/templates/admin_bayes.html:19
+msgid "Spam Filtering: Bayes"
+msgstr "Spamfilter: Bayes"
+
+#: tracspamfilter/templates/admin_bayes.html:25
+#, python-format
+msgid ""
+"The bayesian filter requires training before it can effectively\n"
+"        differentiate between spam and ham. The training database "
+"currently\n"
+"        contains [1:%(numspam)s spam] and\n"
+"        [2:%(numham)s ham] %(ratio)s submissions."
+msgstr ""
+
+#: tracspamfilter/templates/admin_bayes.html:31
+msgid "Clear training database"
+msgstr "Traingsdatenbank löschen"
+
+#: tracspamfilter/templates/admin_bayes.html:34
+msgid ""
+"Resetting the training database can help when training was incorrect\n"
+"            and is producing bad results."
+msgstr ""
+
+#: tracspamfilter/templates/admin_bayes.html:40
+msgid "Minimum training required:"
+msgstr "Minimal nötiges Training:"
+
+#: tracspamfilter/templates/admin_bayes.html:44
+msgid ""
+"The minimum number of spam and ham in the training database before\n"
+"            the filter starts affecting the karma of submissions."
+msgstr ""
+
+#: tracspamfilter/templates/admin_bayes.html:50
+#: tracspamfilter/templates/admin_captcha.html:200
+#: tracspamfilter/templates/admin_external.html:281
+#: tracspamfilter/templates/admin_spamconfig.html:126
+msgid "Apply changes"
+msgstr "Änderungen übernehmen"
+
+#: tracspamfilter/templates/admin_bayes.html:55
+msgid "Training"
+msgstr "Training"
+
+#: tracspamfilter/templates/admin_bayes.html:56
+msgid ""
+"While you can train the spam filter from the “[1:Spam\n"
+"          Filtering → Monitoring]” panel in the web\n"
+"          administration interface, you can also manually train the "
+"filter by\n"
+"          entering samples here, or check what kind of spam probability\n"
+"          currently gets assigned to the content."
+msgstr ""
+
+#: tracspamfilter/templates/admin_bayes.html:64
+msgid "Content:"
+msgstr "Inhalt:"
+
+#: tracspamfilter/templates/admin_bayes.html:69
+#, python-format
+msgid "Error: %(error)s"
+msgstr "Fehler: %(error)s"
+
+#: tracspamfilter/templates/admin_bayes.html:70
+#, python-format
+msgid "Score: %(score)s%"
+msgstr "Kennzahl: %(score)s%"
+
+#: tracspamfilter/templates/admin_bayes.html:73
+msgid "Test"
+msgstr "Test"
+
+#: tracspamfilter/templates/admin_bayes.html:75
+msgid "Train as Spam"
+msgstr "Als Spam trainieren"
+
+#: tracspamfilter/templates/admin_bayes.html:76
+msgid "Train as Ham"
+msgstr "Als Ham trainieren"
+
+#: tracspamfilter/templates/admin_captcha.html:10
+msgid "Captcha handling"
+msgstr "Captchanutzung"
+
+#: tracspamfilter/templates/admin_captcha.html:14
+msgid "Spam Filtering: Captcha handling"
+msgstr "Spamfilter: Captchanutzung"
+
+#: tracspamfilter/templates/admin_captcha.html:20
+msgid "Enable captcha usage"
+msgstr "Captchanutzung aktivieren"
+
+#: tracspamfilter/templates/admin_captcha.html:27
+msgid "Captcha type:"
+msgstr "Captchatyp:"
+
+#: tracspamfilter/templates/admin_captcha.html:41
+msgid "Maximum captcha lifetime in seconds"
+msgstr ""
+
+#: tracspamfilter/templates/admin_captcha.html:49
+msgid "reCAPTCHA"
+msgstr ""
+
+#: tracspamfilter/templates/admin_captcha.html:50
+msgid ""
+"The reCAPTCHA system provides a very good captcha system based on\n"
+"          scanned books. See\n"
+"          [1:Google\n"
+"          reCAPTCHA] page. You need to obtain\n"
+"          API keys to use the service, which is freely available for "
+"personal use."
+msgstr ""
+
+#: tracspamfilter/templates/admin_captcha.html:59
+msgid "Public key:"
+msgstr "Öffentl. Schlüssel:"
+
+#: tracspamfilter/templates/admin_captcha.html:64
+#: tracspamfilter/templates/admin_captcha.html:93
+msgid "Private key:"
+msgstr "Privater Schlüssel:"
+
+#: tracspamfilter/templates/admin_captcha.html:73
+#: tracspamfilter/templates/admin_captcha.html:102
+#: tracspamfilter/templates/admin_captcha.html:136
+msgid "Key validation failed:"
+msgstr "Schlüsselprüfung fehlgeschlagen:"
+
+#: tracspamfilter/templates/admin_captcha.html:78
+msgid "KeyCaptcha"
+msgstr "KeyCaptcha"
+
+#: tracspamfilter/templates/admin_captcha.html:79
+msgid ""
+"The KeyCatcha system provides a captcha system based on JavaScript\n"
+"          functions to reassemble a picture. See\n"
+"          [1:KeyCaptcha]\n"
+"          page. You need to obtain an API key to use the service, which "
+"is\n"
+"          freely available for limited use."
+msgstr ""
+
+#: tracspamfilter/templates/admin_captcha.html:88
+msgid "User ID:"
+msgstr "Nutzerkennung:"
+
+#: tracspamfilter/templates/admin_captcha.html:107
+msgid "Are You A Human"
+msgstr "Sind Sie ein Mensch (Are You A Human)"
+
+#: tracspamfilter/templates/admin_captcha.html:108
+msgid ""
+"The Are You A Human system provides a captcha system based on JavaScript\n"
+"          and Flash functions to play a little game. See\n"
+"          [1:AreYouAHuman]\n"
+"          page. You need to obtain API keys to use the service, which are"
+"\n"
+"          freely available for limited use."
+msgstr ""
+
+#: tracspamfilter/templates/admin_captcha.html:115
+msgid ""
+"NOTE: You need to change the game style from 'Lightbox' to\n"
+"          'Embedded' in the AreYouAHuman server settings to allow usage "
+"with\n"
+"          this spam filter."
+msgstr ""
+
+#: tracspamfilter/templates/admin_captcha.html:122
+msgid "Publisher key:"
+msgstr "Publisher-Schlüssel:"
+
+#: tracspamfilter/templates/admin_captcha.html:127
+msgid "Scoring key:"
+msgstr "Scoring-Schlüssel:"
+
+#: tracspamfilter/templates/admin_captcha.html:141
+msgid "Text captcha"
+msgstr "Text-Captcha"
+
+#: tracspamfilter/templates/admin_captcha.html:142
+msgid ""
+"The text captcha constructs easy text questions. They can be\n"
+"          broken relatively easy."
+msgstr ""
+"Das Text-Captcha konstruiert eine einfache Textfrage. Diese\n"
+"kann relativ einfach überwunden werden."
+
+#: tracspamfilter/templates/admin_captcha.html:148
+msgid "Maximum value in a term:"
+msgstr "Maximumaler Wert in einem Ausdruck:"
+
+#: tracspamfilter/templates/admin_captcha.html:153
+msgid "Number of terms:"
+msgstr "Anzahl an Ausdrücken:"
+
+#: tracspamfilter/templates/admin_captcha.html:163
+msgid "Image captcha"
+msgstr "Bild-Captcha"
+
+#: tracspamfilter/templates/admin_captcha.html:164
+msgid ""
+"The image captcha constructs obstructed images using Python\n"
+"          imaging library."
+msgstr ""
+"Das Bild-Captcha erzeugt gestörte Bilder mithilfe der\n"
+"Python-Bildbearbeitungsbibliothek."
+
+#: tracspamfilter/templates/admin_captcha.html:170
+msgid "Number of letters:"
+msgstr "Buchstabenanzahl:"
+
+#: tracspamfilter/templates/admin_captcha.html:175
+msgid "Font size:"
+msgstr "Schriftgröße:"
+
+#: tracspamfilter/templates/admin_captcha.html:180
+msgid "Alphabet:"
+msgstr "Alphabet:"
+
+#: tracspamfilter/templates/admin_captcha.html:185
+msgid "Fonts:"
+msgstr "Zeichensätze:"
+
+#: tracspamfilter/templates/admin_captcha.html:195
+msgid "Data validation failed:"
+msgstr "Datenprüfung fehlgeschlagen:"
+
+#: tracspamfilter/templates/admin_captcha.html:201
+#: tracspamfilter/templates/admin_external.html:282
+msgid "Revert changes"
+msgstr "Änderungen verwerfen"
+
+#: tracspamfilter/templates/admin_external.html:10
+msgid "External services"
+msgstr "Externe Dienste"
+
+#: tracspamfilter/templates/admin_external.html:29
+msgid "Spam Filtering: External services"
+msgstr "Spamfilter: Externe Dienste"
+
+#: tracspamfilter/templates/admin_external.html:35
+msgid "Use external services"
+msgstr "Externe Dienste nutzen"
+
+#: tracspamfilter/templates/admin_external.html:43
+msgid "Train external services"
+msgstr "Externe Dienste trainieren"
+
+#: tracspamfilter/templates/admin_external.html:49
+msgid ""
+"The Akismet filter uses the free\n"
+"          [1:Akismet]\n"
+"          service to decide if content submissions are potential spam. "
+"You need to obtain an\n"
+"          API key to use the service, which is freely available for "
+"personal use."
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:56
+#: tracspamfilter/templates/admin_external.html:84
+#: tracspamfilter/templates/admin_external.html:112
+#: tracspamfilter/templates/admin_external.html:166
+#: tracspamfilter/templates/admin_external.html:183
+#: tracspamfilter/templates/admin_external.html:200
+#: tracspamfilter/templates/admin_external.html:216
+#: tracspamfilter/templates/admin_external.html:233
+#: tracspamfilter/templates/admin_external.html:254
+msgid "API key:"
+msgstr "API-Schlüssel:"
+
+#: tracspamfilter/templates/admin_external.html:62
+#: tracspamfilter/templates/admin_external.html:90
+#: tracspamfilter/templates/admin_external.html:118
+#: tracspamfilter/templates/admin_external.html:142
+msgid "URL:"
+msgstr "URL:"
+
+#: tracspamfilter/templates/admin_external.html:68
+#: tracspamfilter/templates/admin_external.html:96
+#: tracspamfilter/templates/admin_external.html:124
+#: tracspamfilter/templates/admin_external.html:130
+#: tracspamfilter/templates/admin_external.html:239
+#, python-format
+msgid "[1:Key validation failed:] %(error)s"
+msgstr "[1:Schlüsselprüfung fehlgeschlagen:] %(error)s"
+
+#: tracspamfilter/templates/admin_external.html:76
+msgid ""
+"The TypePad AntiSpam filter uses the free\n"
+"          [1:TypePad AntiSpam]\n"
+"          service to decide if content submissions are potential spam. "
+"You need to obtain an\n"
+"          API key to use the service, which is freely available for "
+"personal use."
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:104
+msgid ""
+"The Defensio filter uses the\n"
+"          [1:Defensio]\n"
+"          service to decide if content submissions are potential spam. "
+"You need to obtain an\n"
+"          API key to use the service, which is freely available for "
+"personal use."
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:136
+msgid ""
+"The BlogSpam filter uses the free\n"
+"          [1:BlogSpam]\n"
+"          service to decide if content submissions are potential spam."
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:148
+msgid "Tests to skip (comma separated):"
+msgstr "Zu überspringende Prüfungen (kommagetrennt):"
+
+#: tracspamfilter/templates/admin_external.html:151
+#, python-format
+msgid "Possible Values: %(methods)s"
+msgstr "Mögliche Werte: %(methods)s"
+
+#: tracspamfilter/templates/admin_external.html:158
+msgid ""
+"The StopForumSpam filter uses the\n"
+"          [1:StopForumSpam]\n"
+"          service to decide if content submissions are potential spam. "
+"You need to obtain an\n"
+"          API key to report SPAM to the service, which is freely "
+"available."
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:175
+msgid ""
+"The SpamBusted filter uses the\n"
+"          [1:SpamBusted]\n"
+"          service to decide if content submissions are potential spam. "
+"You need to obtain an\n"
+"          API key to report SPAM to the service, which is freely "
+"available."
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:192
+msgid ""
+"The BotScout filter uses the\n"
+"          [1:BotScout]\n"
+"          service to decide if content submissions are potential spam. "
+"You need to obtain an\n"
+"          API key to use the service, which is freely available."
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:209
+msgid ""
+"The FSpamList filter uses the\n"
+"          [1:FSpamList]\n"
+"          service to decide if content submissions are potential spam. "
+"You need to obtain an\n"
+"          API key to use the service, which is freely available."
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:225
+msgid ""
+"The SpamWipe filter uses the free\n"
+"          [1:SpamWipe]\n"
+"          service to decide if content submissions are potential spam. "
+"You need to obtain an\n"
+"          API key to use the service, which is freely available for a\n"
+"          certain amount of requests."
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:246
+msgid ""
+"The HTTP_BL filter uses the free\n"
+"          [1:HTTP:BL]\n"
+"          service to decide if content submissions are potential spam. "
+"You need to obtain an\n"
+"          API key to use the service, which is freely available for "
+"personal use."
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:262
+msgid "Free access blacklists"
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:264
+msgid "Blacklists (comma separated):"
+msgstr ""
+
+#: tracspamfilter/templates/admin_external.html:268
+msgid ""
+"A list of DNS blacklists can be found at the [1:RBLCheck]\n"
+"                   service."
+msgstr ""
+"Eine Übersicht von schwarzen Listen für DNS kann beim\n"
+"[1:RBLCheck]-Service gefunden werden."
+
+#: tracspamfilter/templates/admin_external.html:274
+msgid ""
+"You can enable or disable these filters from the “[1:General →\n"
+"        Plugins]” panel of the web administration interface."
+msgstr ""
+
+#: tracspamfilter/templates/admin_spamconfig.html:10
+msgid "Spam Filter"
+msgstr "Spamfilter"
+
+#: tracspamfilter/templates/admin_spamconfig.html:26
+msgid "Spam Filtering: Configuration"
+msgstr "Spamfilter: Einstellungen"
+
+#: tracspamfilter/templates/admin_spamconfig.html:30
+msgid "Karma Tuning"
+msgstr "Karmanpassung"
+
+#: tracspamfilter/templates/admin_spamconfig.html:32
+msgid "Minimum karma required for a successful submission:"
+msgstr ""
+
+#: tracspamfilter/templates/admin_spamconfig.html:38
+msgid ""
+"Karma assigned to attachments (e.g. to allow relaxed rules for file "
+"uploads):"
+msgstr ""
+
+#: tracspamfilter/templates/admin_spamconfig.html:44
+msgid ""
+"Content submissions are passed through a set of registered and enabled\n"
+"          [1:filter strategies], each of which check the submitted "
+"content\n"
+"          and may assign [2:karma points] to it. The sum of these karma\n"
+"          points needs to be greater than or equal to the minimum karma\n"
+"          configured here for the submission to be accepted."
+msgstr ""
+
+#: tracspamfilter/templates/admin_spamconfig.html:53
+msgid "Strategy"
+msgstr "Strategie"
+
+#: tracspamfilter/templates/admin_spamconfig.html:54
+msgid "Karma points"
+msgstr "Karma-Punkte"
+
+#: tracspamfilter/templates/admin_spamconfig.html:55
+msgid "Description"
+msgstr "Beschreibung"
+
+#: tracspamfilter/templates/admin_spamconfig.html:69
+msgid "Logging"
+msgstr "Aufzeichnung"
+
+#: tracspamfilter/templates/admin_spamconfig.html:73
+msgid "Enable"
+msgstr "Aktivieren"
+
+#: tracspamfilter/templates/admin_spamconfig.html:77
+msgid ""
+"The spam filter plugin can optionally log every content submission so\n"
+"          that you can monitor and tune the effectiveness of the "
+"filtering. The\n"
+"          log is stored in the database, and can be viewed under “[1:Spam"
+"\n"
+"          Filtering → Monitoring]” from the web administration\n"
+"          interface."
+msgstr ""
+
+#: tracspamfilter/templates/admin_spamconfig.html:85
+msgid ""
+"Purge old entries after\n"
+"            [1:]\n"
+"            days"
+msgstr ""
+"Alte Einträge nach\n"
+"            [1:]\n"
+"            Tagen entfernen"
+
+#: tracspamfilter/templates/admin_spamconfig.html:93
+#, python-format
+msgid ""
+"Number of entries in log message display\n"
+"            (%(min)s-%(max)s)\n"
+"            [1:]"
+msgstr ""
+"Anzahl von Einträgen in Log-Nachrichtenanzeige\n"
+"            (%(min)s-%(max)s)\n"
+"            [1:]"
+
+#: tracspamfilter/templates/admin_spamconfig.html:103
+msgid "Authenticated"
+msgstr "Anmeldung"
+
+#: tracspamfilter/templates/admin_spamconfig.html:107
+msgid "Trust authenticated users"
+msgstr "Angemeldeten Nutzern vertrauen"
+
+#: tracspamfilter/templates/admin_spamconfig.html:111
+msgid ""
+"If authenticated users should not be trusted automatically, this\n"
+"          option must be disabled. Instead of full trust the supplied "
+"karma\n"
+"          value is used in this case."
+msgstr ""
+"Falls angemeldeten Nutzenr nicht automatisch vertraut werden soll, so\n"
+"muss diese Option deaktiviert werden. Statt vollem Vertrauen wird dann\n"
+"der angegebene Karma-Wert genutzt."
+
+#: tracspamfilter/templates/admin_spamconfig.html:117
+msgid "Karma of authenticated users:"
+msgstr "Karma von angemeldeten Nutzern:"
+
+#: tracspamfilter/templates/admin_spamentry.html:11
+#: tracspamfilter/templates/admin_spammonitor.html:11
+msgid "Spam Monitoring"
+msgstr "Spam-Überwachung"
+
+#: tracspamfilter/templates/admin_spamentry.html:16
+msgid "Log Entry"
+msgstr "Logeintrag"
+
+#: tracspamfilter/templates/admin_spamentry.html:16
+msgid "Back to List"
+msgstr "Zurück zur Liste"
+
+#: tracspamfilter/templates/admin_spamentry.html:18
+#: tracspamfilter/templates/admin_spammonitor.html:15
+msgid "Spam Filtering: Monitoring"
+msgstr "Spamfilter: Überwachung"
+
+#: tracspamfilter/templates/admin_spamentry.html:22
+msgid "Log Entry:"
+msgstr "Logeintrag:"
+
+#: tracspamfilter/templates/admin_spamentry.html:23
+msgid "Information"
+msgstr "Information"
+
+#: tracspamfilter/templates/admin_spamentry.html:25
+msgid "Time:"
+msgstr "Zeit:"
+
+#: tracspamfilter/templates/admin_spamentry.html:28
+msgid "Path:"
+msgstr "Pfad:"
+
+#: tracspamfilter/templates/admin_spamentry.html:31
+msgid "Author:"
+msgstr "Autor:"
+
+#: tracspamfilter/templates/admin_spamentry.html:34
+msgid "Authenticated:"
+msgstr "Angemeldet:"
+
+#: tracspamfilter/templates/admin_spamentry.html:35
+msgid "yes"
+msgstr "ja"
+
+#: tracspamfilter/templates/admin_spamentry.html:35
+msgid "no"
+msgstr "nein"
+
+#: tracspamfilter/templates/admin_spamentry.html:37
+msgid "IP address:"
+msgstr "IP-Adresse:"
+
+#: tracspamfilter/templates/admin_spamentry.html:40
+msgid "spam"
+msgstr "Spam"
+
+#: tracspamfilter/templates/admin_spamentry.html:40
+msgid "ham"
+msgstr "Ham"
+
+#: tracspamfilter/templates/admin_spamentry.html:43
+msgid "Karma:"
+msgstr "Karma:"
+
+#: tracspamfilter/templates/admin_spamentry.html:44
+#, python-format
+msgid ""
+"[1:%(karma)s]\n"
+"            (marked as %(spam_or_ham)s)\n"
+"            [2:\n"
+"              [3:%(reasons)s]\n"
+"            ]"
+msgstr ""
+"[1:%(karma)s]\n"
+"            (markiert als %(spam_or_ham)s)\n"
+"            [2:\n"
+"              [3:%(reasons)s]\n"
+"            ]"
+
+#: tracspamfilter/templates/admin_spamentry.html:54
+msgid "Submitted content"
+msgstr "Übertragener Inhalt"
+
+#: tracspamfilter/templates/admin_spamentry.html:58
+msgid "HTTP headers"
+msgstr "HTTP-Kopfzeilen"
+
+#: tracspamfilter/templates/admin_spamentry.html:63
+msgid "Mark as Spam"
+msgstr "Als Spam markieren"
+
+#: tracspamfilter/templates/admin_spamentry.html:64
+msgid "Mark as Ham"
+msgstr "Als Ham markieren"
+
+#: tracspamfilter/templates/admin_spamentry.html:65
+msgid "Delete"
+msgstr "Löschen"
+
+#: tracspamfilter/templates/admin_spamentry.html:66
+msgid "Delete as Spam"
+msgstr "Als Spam löschen"
+
+#: tracspamfilter/templates/admin_spamentry.html:67
+msgid "Delete as Ham"
+msgstr "als Ham löschen"
+
+#: tracspamfilter/templates/admin_spamentry.html:75
+msgid "Remove registered user"
+msgstr "Registrierten Nutzer entfernen"
+
+#: tracspamfilter/templates/admin_spamentry.html:81
+msgid "Search for user name"
+msgstr "Nach Nutzernamen suchen"
+
+#: tracspamfilter/templates/admin_spammonitor.html:19
+msgid "Note:"
+msgstr "Notiz:"
+
+#: tracspamfilter/templates/admin_spammonitor.html:19
+msgid "Logging by the spam filter is currently disabled."
+msgstr "Aufzeichnung des Spamfilters is momentan deaktiviert."
+
+#: tracspamfilter/templates/admin_spammonitor.html:21
+#, python-format
+msgid "Viewing entries %(start)s – %(end)s of %(total)s."
+msgstr "Einträge %(start)s – %(end)s von %(total)s anzeigen."
+
+#: tracspamfilter/templates/admin_spammonitor.html:32
+msgid "Path"
+msgstr "Pfad"
+
+#: tracspamfilter/templates/admin_spammonitor.html:33
+msgid "Author"
+msgstr "Autor"
+
+#: tracspamfilter/templates/admin_spammonitor.html:34
+msgid "IP Address"
+msgstr "IP-Adresse"
+
+#: tracspamfilter/templates/admin_spammonitor.html:35
+msgid "Karma"
+msgstr "Karma"
+
+#: tracspamfilter/templates/admin_spammonitor.html:36
+msgid "Date/time"
+msgstr "Datum/Zeit"
+
+#: tracspamfilter/templates/admin_spammonitor.html:54
+msgid "User was logged in"
+msgstr "Nutzer war angemeldet"
+
+#: tracspamfilter/templates/admin_spammonitor.html:54
+msgid "User was not logged in"
+msgstr "Nutzer war nicht angemeldet"
+
+#: tracspamfilter/templates/admin_spammonitor.html:72
+msgid "No data available"
+msgstr "Keine Daten verfügbar"
+
+#: tracspamfilter/templates/admin_spammonitor.html:85
+msgid "Mark selected as Spam"
+msgstr "Gewähltes als Spam markieren"
+
+#: tracspamfilter/templates/admin_spammonitor.html:86
+msgid "Mark selected as Ham"
+msgstr "Gewähltes als Ham markieren"
+
+#: tracspamfilter/templates/admin_spammonitor.html:87
+msgid "Delete selected"
+msgstr "Gewähltes löschen"
+
+#: tracspamfilter/templates/admin_spammonitor.html:88
+msgid "Delete selected as Spam"
+msgstr "Gewähltes als Spam löschen"
+
+#: tracspamfilter/templates/admin_spammonitor.html:89
+msgid "Delete selected as Ham"
+msgstr "Gewähltes als Ham löschen"
+
+#: tracspamfilter/templates/admin_spammonitor.html:153
+#, python-format
+msgid "Select 100.00%% entries"
+msgstr "100%%-Einträge wählen"
+
+#: tracspamfilter/templates/admin_spammonitor.html:156
+#, python-format
+msgid "Select &gt;90.00%% entries"
+msgstr "Einträge &gt;90%% wählen"
+
+#: tracspamfilter/templates/admin_spammonitor.html:159
+#, python-format
+msgid "Select &lt;10.00%% entries"
+msgstr "Einträge &lt;10%% wählen"
+
+#: tracspamfilter/templates/admin_spammonitor.html:162
+#, python-format
+msgid "Select 0.00%% entries"
+msgstr "0.00%%-Einträge wählen"
+
+#: tracspamfilter/templates/admin_spammonitor.html:166
+msgid "Select Spam entries"
+msgstr "Spam-Einträge wählen"
+
+#: tracspamfilter/templates/admin_spammonitor.html:169
+msgid "Select Ham entries"
+msgstr "Ham-Einträge wählen"
+
+#: tracspamfilter/templates/verify_captcha.html:13
+msgid "Captcha Error"
+msgstr "Captcha-Fehler"
+
+#: tracspamfilter/templates/verify_captcha.html:17
+msgid ""
+"Trac thinks your submission might be Spam.\n"
+"           To prove otherwise please provide a response to the following."
+msgstr ""
+"Trac wertet Ihre Übertragung als Spam.\n"
+"Um das Gegenteil zu beweisen, geben Sie bitte Antwort auf folgendes."
+
+#: tracspamfilter/templates/verify_captcha.html:19
+msgid ""
+"Note - the captcha method is choosen randomly. Retry if the captcha does "
+"not work on your system!"
+msgstr ""
+
+#: tracspamfilter/templates/verify_captcha.html:22
+msgid "Response:"
+msgstr "Antwort:"
+
+#: tracspamfilter/templates/verify_captcha.html:24
+msgid "Submit"
+msgstr ""
+

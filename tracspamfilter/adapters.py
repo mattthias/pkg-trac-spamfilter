@@ -20,10 +20,11 @@ from trac.mimeview import is_binary
 from trac.ticket import ITicketManipulator, TicketSystem
 from trac.util.text import to_unicode
 from trac.wiki import WikiPage, IWikiPageManipulator
-from tracspamfilter.api import FilterSystem
-
+from tracspamfilter.filtersystem import FilterSystem
 
 class TicketFilterAdapter(Component):
+    """Interface to check ticket changes for spam.
+    """
     implements(ITicketManipulator)
 
     # ITicketManipulator methods
@@ -43,21 +44,18 @@ class TicketFilterAdapter(Component):
         changes = []
 
         # Add the author/reporter name
-        if not ticket.exists:
+        if req.authname and req.authname != 'anonymous':
+            author = req.authname
+        elif not ticket.exists:
             author = ticket['reporter']
         else:
-            author = req.args.get('author')
-        if author:
-            changes += [(None, author)]
+            author = req.args.get('author', req.authname)
 
-        # Add any modified text fields of the ticket (except for the CC field)
+        # Add any modified text fields of the ticket
         fields = [f['name'] for f in
                   TicketSystem(self.env).get_ticket_fields()
                   if f['type'] in ('textarea', 'text')]
-        fields.remove('cc')
         for field in fields:
-            if ticket.exists and field == 'description':
-                continue
             if field in ticket._old:
                 changes.append((ticket._old[field], ticket[field]))
 
@@ -67,11 +65,12 @@ class TicketFilterAdapter(Component):
         FilterSystem(self.env).test(req, author, changes)
         return []
 
-
 class WikiFilterAdapter(Component):
+    """Interface to check wiki changes for spam.
+    """
     implements(IWikiPageManipulator)
 
-    # ITicketManipulator methods
+    # IWikiPageManipulator methods
 
     def prepare_wiki_page(self, req, page, fields):
         pass
@@ -85,12 +84,13 @@ class WikiFilterAdapter(Component):
             # Only a preview, no need to filter the submission yet
             return []
 
-        cur_page = WikiPage(self.env, name=page.name, version=page.version)
+        old_text = page.old_text
+        text = page.text
         author = req.args.get('author', req.authname)
-        comment = req.args['comment']
+        comment = req.args.get('comment')
 
         # Test the actual page changes as well as the comment
-        changes = [(cur_page.text, page.text), (None, author)]
+        changes = [(old_text, text)]
         if comment:
             changes += [(None, comment)]
 
@@ -99,11 +99,13 @@ class WikiFilterAdapter(Component):
 
 
 class AttachmentFilterAdapter(Component):
+    """Interface to check attachment uploads for spam.
+    """
     implements(IAttachmentManipulator)
 
     sample_size = IntOption('spam-filter', 'attachment_sample_size', 16384,
-        """The number of bytes from an attachment to pass through the spam
-        filters.""")
+        """The maximum number of bytes from an attachment to pass through
+        the spam filters.""", doc_domain='tracspamfilter')
 
     # ITicketManipulator methods
 
@@ -116,20 +118,22 @@ class AttachmentFilterAdapter(Component):
             return []
 
         author = req.args.get('author', req.authname)
-        description = req.args['description']
+        description = req.args.get('description')
 
-        upload = req.args['attachment']
+        filename = None
+        upload = req.args.get('attachment')
         content = ''
-        try:
-            data = upload.file.read(self.sample_size)
-            if not is_binary(data):
-                content = to_unicode(data)
-        finally:
-            upload.file.seek(0)
-        filename = upload.filename
+        if upload is not None:
+            try:
+                data = upload.file.read(self.sample_size)
+                if not is_binary(data):
+                    content = to_unicode(data)
+            finally:
+                upload.file.seek(0)
+            filename = upload.filename
 
         changes = []
-        for field in filter(None, [author, description, filename, content]):
+        for field in filter(None, [description, filename, content]):
             changes += [(None, field)]
 
         FilterSystem(self.env).test(req, author, changes)

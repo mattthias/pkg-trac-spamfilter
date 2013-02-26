@@ -27,31 +27,31 @@ class SessionFilterStrategyTestCase(unittest.TestCase):
     def test_new_session(self):
         data = {}
         session = Mock(last_visit=42, get=data.get)
-        retval = self.strategy.test(Mock(session=session), None, None)
+        retval = self.strategy.test(Mock(session=session), None, None, "127.0.0.1")
         self.assertEqual((3, 'Existing session found'), retval)
 
     def test_session_name_set(self):
         data = {'name': 'joe'}
         session = Mock(last_visit=42, get=data.get)
-        retval = self.strategy.test(Mock(session=session), None, None)
+        retval = self.strategy.test(Mock(session=session), None, None, "127.0.0.1")
         self.assertEqual((6, 'Existing session found'), retval)
 
     def test_session_email_set(self):
         data = {'email': 'joe@example.org'}
         session = Mock(last_visit=42, get=data.get)
-        retval = self.strategy.test(Mock(session=session), None, None)
+        retval = self.strategy.test(Mock(session=session), None, None, "127.0.0.1")
         self.assertEqual((6, 'Existing session found'), retval)
 
     def test_session_email_set_but_invalid(self):
         data = {'email': 'joey'}
         session = Mock(last_visit=42, get=data.get)
-        retval = self.strategy.test(Mock(session=session), None, None)
+        retval = self.strategy.test(Mock(session=session), None, None, "127.0.0.1")
         self.assertEqual((3, 'Existing session found'), retval)
 
     def test_session_name_and_email_set(self):
         data = {'name': 'joe', 'email': 'joe@example.org'}
         session = Mock(last_visit=42, get=data.get)
-        retval = self.strategy.test(Mock(session=session), None, None)
+        retval = self.strategy.test(Mock(session=session), None, None, "127.0.0.1")
         self.assertEqual((9, 'Existing session found'), retval)
 
 

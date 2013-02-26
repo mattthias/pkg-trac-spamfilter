@@ -15,7 +15,23 @@
 from setuptools import setup, find_packages
 
 PACKAGE = 'TracSpamFilter'
-VERSION = '0.2.1'
+VERSION = '0.7.3'
+
+extra = {}
+try:
+    from trac.util.dist import get_l10n_cmdclass
+    cmdclass = get_l10n_cmdclass()
+    if cmdclass:
+        extra['cmdclass'] = cmdclass
+        extractors = [
+            ('**.py',                'trac.dist:extract_python', None),
+            ('**/templates/**.html', 'genshi', None)
+        ]
+        extra['message_extractors'] = {
+            'tracspamfilter': extractors,
+        }
+except ImportError:
+    pass
 
 setup(
     name = PACKAGE,
@@ -33,24 +49,51 @@ setup(
     keywords='trac plugin',
 
     packages = find_packages(exclude=['*.tests*']),
-    package_data = {'tracspamfilter': ['templates/*', 'htdocs/*']},
+    package_data = {'tracspamfilter': ['templates/*', 'htdocs/*', 'fonts/*', 'locale/*/LC_MESSAGES/*.mo']},
+    install_requires = ['Trac >= 0.12'],
     extras_require = {
         'DNS': ['dnspython>=1.3.5'],
         'SpamBayes': ['spambayes'],
+        'PIL': ['pil'],
+        'json': ['python>=2.6'],
+        'account' : ['TracAccountManager>0.3.9999']
     },
     entry_points = """
         [trac.plugins]
         spamfilter = tracspamfilter.api
+        spamfilter.filtersystem = tracspamfilter.filtersystem
         spamfilter.admin = tracspamfilter.admin
         spamfilter.adapters = tracspamfilter.adapters
+        spamfilter.accountadapter = tracspamfilter.accountadapter[account]
+        spamfilter.registration = tracspamfilter.filters.registration[account]
         spamfilter.akismet = tracspamfilter.filters.akismet
+        spamfilter.stopforumspam = tracspamfilter.filters.stopforumspam
+        spamfilter.spambusted = tracspamfilter.filters.spambusted
+        spamfilter.spamwipe = tracspamfilter.filters.spamwipe
+        spamfilter.botscout = tracspamfilter.filters.botscout
+        spamfilter.fspamlist = tracspamfilter.filters.fspamlist
+        spamfilter.linksleeve = tracspamfilter.filters.linksleeve
+        spamfilter.blogspam = tracspamfilter.filters.blogspam
+        spamfilter.defensio = tracspamfilter.filters.defensio[json]
+        spamfilter.typepad = tracspamfilter.filters.typepad
         spamfilter.bayes = tracspamfilter.filters.bayes[SpamBayes]
         spamfilter.extlinks = tracspamfilter.filters.extlinks
+        spamfilter.httpbl = tracspamfilter.filters.httpbl[DNS]
         spamfilter.ip_blacklist = tracspamfilter.filters.ip_blacklist[DNS]
         spamfilter.ip_throttle = tracspamfilter.filters.ip_throttle
         spamfilter.regex = tracspamfilter.filters.regex
+        spamfilter.trapfield = tracspamfilter.filters.trapfield
+        spamfilter.ip_regex = tracspamfilter.filters.ip_regex
         spamfilter.session = tracspamfilter.filters.session
+        spamfilter.captcha = tracspamfilter.captcha.api
+        spamfilter.captcha.image = tracspamfilter.captcha.image[PIL]
+        spamfilter.captcha.expression = tracspamfilter.captcha.expression
+        spamfilter.captcha.rand = tracspamfilter.captcha.rand
+        spamfilter.captcha.recaptcha = tracspamfilter.captcha.recaptcha
+        spamfilter.captcha.keycaptcha = tracspamfilter.captcha.keycaptcha
+        spamfilter.captcha.areyouahuman = tracspamfilter.captcha.areyouahuman
     """,
     test_suite = 'tracspamfilter.tests.suite',
-    zip_safe = True
+    zip_safe = False,
+    **extra
 )

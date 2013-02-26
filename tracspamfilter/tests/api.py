@@ -17,7 +17,8 @@ import unittest
 from trac.core import *
 from trac.db.sqlite_backend import _to_sql
 from trac.test import EnvironmentStub, Mock
-from tracspamfilter.api import IFilterStrategy, FilterSystem, RejectContent
+from tracspamfilter.api import IFilterStrategy, RejectContent
+from tracspamfilter.filtersystem import FilterSystem
 from tracspamfilter.model import LogEntry, schema
 
 
@@ -35,18 +36,20 @@ class DummyStrategy(Component):
         self.karma = karma
         self.message = message
 
-    def test(self, req, author, content):
+    def test(self, req, author, content, ip):
         self.test_called = True
         self.req = req
         self.author = author
         self.content = content
+        self.ip = ip
         return self.karma, self.message
 
-    def train(self, req, author, content, spam=True):
+    def train(self, req, author, content, ip, spam=True):
         self.train_called = True
         self.req = req
         self.author = author
         self.content = content
+        self.ip = ip
         self.spam = spam
 
 
@@ -64,33 +67,36 @@ class FilterSystemTestCase(unittest.TestCase):
     def test_trust_authenticated(self):
         req = Mock(environ={}, path_info='/foo', authname='john',
                    remote_addr='127.0.0.1')
-        FilterSystem(self.env).test(req, '', [])
+        FilterSystem(self.env).test(req, '', [], '127.0.0.1')
         self.assertEqual(False, DummyStrategy(self.env).test_called)
 
     def test_dont_trust_authenticated(self):
         self.env.config['spam-filter'].set('trust_authenticated', 'false')
         req = Mock(environ={}, path_info='/foo', authname='john',
                    remote_addr='127.0.0.1')
-        FilterSystem(self.env).test(req, '', [])
+        FilterSystem(self.env).test(req, '', [], '127.0.0.1')
         self.assertEqual(True, DummyStrategy(self.env).test_called)
 
     def test_without_oldcontent(self):
         req = Mock(environ={}, path_info='/foo', authname='anonymous',
                    remote_addr='127.0.0.1')
-        FilterSystem(self.env).test(req, 'John Doe', [(None, 'Test')])
+        FilterSystem(self.env).test(req, 'John Doe', [(None, 'Test')],
+                                   '127.0.0.1')
         self.assertEqual('Test', DummyStrategy(self.env).content)
 
     def test_with_oldcontent(self):
         req = Mock(environ={}, path_info='/foo', authname='anonymous',
                    remote_addr='127.0.0.1')
-        FilterSystem(self.env).test(req, 'John Doe', [('Test', 'Test 1 2 3')])
+        FilterSystem(self.env).test(req, 'John Doe', [('Test', 'Test 1 2 3')],
+                                    '127.0.0.1')
         self.assertEqual('Test 1 2 3', DummyStrategy(self.env).content)
 
     def test_with_oldcontent_multiline(self):
         req = Mock(environ={}, path_info='/foo', authname='anonymous',
                    remote_addr='127.0.0.1')
         FilterSystem(self.env).test(req, 'John Doe', [('Text\n1 2 3\n7 8 9',
-                                                       'Test\n1 2 3\n4 5 6')])
+                                                       'Test\n1 2 3\n4 5 6')],
+                                                       '127.0.0.1')
         self.assertEqual('Test\n4 5 6', DummyStrategy(self.env).content)
 
     def test_bad_karma(self):
@@ -98,7 +104,8 @@ class FilterSystemTestCase(unittest.TestCase):
                    remote_addr='127.0.0.1')
         DummyStrategy(self.env).configure(-5, 'Blacklisted')
         try:
-            FilterSystem(self.env).test(req, 'John Doe', [(None, 'Test')])
+            FilterSystem(self.env).test(req, 'John Doe', [(None, 'Test')],
+                                        '127.0.0.1')
             self.fail('Expected RejectContent exception')
         except RejectContent, e:
             self.assertEqual('Submission rejected as potential spam '
@@ -108,14 +115,16 @@ class FilterSystemTestCase(unittest.TestCase):
         req = Mock(environ={}, path_info='/foo', authname='anonymous',
                    remote_addr='127.0.0.1')
         DummyStrategy(self.env).configure(5)
-        FilterSystem(self.env).test(req, 'John Doe', [(None, 'Test')])
+        FilterSystem(self.env).test(req, 'John Doe', [(None, 'Test')],
+                                    '127.0.0.1')
 
     def test_log_reject(self):
         req = Mock(environ={}, path_info='/foo', authname='anonymous',
                    remote_addr='127.0.0.1')
         DummyStrategy(self.env).configure(-5, 'Blacklisted')
         try:
-            FilterSystem(self.env).test(req, 'John Doe', [(None, 'Test')])
+            FilterSystem(self.env).test(req, 'John Doe', [(None, 'Test')],
+                                        '127.0.0.1')
             self.fail('Expected RejectContent exception')
         except RejectContent, e:
             pass
@@ -136,7 +145,8 @@ class FilterSystemTestCase(unittest.TestCase):
         req = Mock(environ={}, path_info='/foo', authname='anonymous',
                    remote_addr='127.0.0.1')
         DummyStrategy(self.env).configure(5)
-        FilterSystem(self.env).test(req, 'John Doe', [(None, 'Test')])
+        FilterSystem(self.env).test(req, 'John Doe', [(None, 'Test')],
+                                    '127.0.0.1')
 
         log = list(LogEntry.select(self.env))
         self.assertEqual(1, len(log))

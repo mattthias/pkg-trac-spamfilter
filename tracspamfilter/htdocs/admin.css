@@ -51,3 +51,12 @@ form#spamentry .meta th, form#spamentry .meta td { font-size: 90%; }
 form#spamentry pre { background: #e6e6e6; border: 1px solid #666;
   font-size: 90%; padding: .25em; width: 90%; overflow: auto;
 }
+
+input.spambutton {background-color: #f4d7d7}
+input.dangerbutton {background-color: #ff3737}
+input.hambutton {background-color: #d7f4d7}
+
+input.spambox {color: #f40710}
+input.hambox {color: #10a410}
+td.spambox {color: #f40710}
+td.hambox {color: #10a410}
