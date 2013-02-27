@@ -1,8 +1,12 @@
-trac-spamfilter (0.2.1+svn6871-5) UNRELEASED; urgency=low
+trac-spamfilter (0.7.3+svn11697-1) UNRELEASED; urgency=low
 
-  * Bump Standards-Version to 3.9.2.
+  * New upstream version 0.7.3+svn11697
+  * Set myself as new Maintainer (Closes: #590778)
+  * Bump Standards-Version to 3.9.4.
+  * Set VCS-* fields to new git repository.
+  * Update dependency to trac 1.0.1.
 
- -- Chris Lamb <lamby@debian.org>  Sat, 18 Jun 2011 14:48:44 +0100
+ -- Matthias Schmitz <matthias@sigxcpu.org>  Wed, 27 Feb 2013 21:39:17 +0100
 
 trac-spamfilter (0.2.1+svn6871-4) unstable; urgency=low
 
