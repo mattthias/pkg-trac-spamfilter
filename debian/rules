@@ -11,6 +11,13 @@ get-orig-source:
 %:
 	dh $@
 
+override_dh_auto_install:
+	dh_auto_install
+	# don't package vera.ttf
+	rm -v $(CURDIR)/debian/trac-spamfilter/usr/lib/python2.*/dist-packages/tracspamfilter/fonts/vera.ttf
+	rmdir -v $(CURDIR)/debian/trac-spamfilter/usr/lib/python2.*/dist-packages/tracspamfilter/fonts
+
 override_dh_auto_clean:
 	dh_auto_clean
 	rm -rf TracSpamFilter.egg-info
+	-rm tracspamfilter/locale/fr/LC_MESSAGES/tracspamfilter.mo tracspamfilter/locale/de/LC_MESSAGES/tracspamfilter.mo
