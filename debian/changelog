@@ -5,6 +5,7 @@ trac-spamfilter (0.7.3+svn11697-1) UNRELEASED; urgency=low
   * Bump Standards-Version to 3.9.4.
   * Set VCS-* fields to new git repository.
   * Update dependency to trac 1.0.1.
+  * [8202c66] Add patch to set absolut path for font (image captcha)
 
  -- Matthias Schmitz <matthias@sigxcpu.org>  Wed, 27 Feb 2013 21:39:17 +0100
 

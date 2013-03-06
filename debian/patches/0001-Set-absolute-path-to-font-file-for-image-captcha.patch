@@ -1,0 +1,22 @@
+From: Matthias Schmitz <matthias@sigxcpu.org>
+Date: Wed, 6 Mar 2013 19:47:46 +0100
+Subject: Set absolute path to font file for image captcha.
+
+* With the relative path the font file was not found.
+---
+ tracspamfilter/captcha/image.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tracspamfilter/captcha/image.py b/tracspamfilter/captcha/image.py
+index 9486e2b..30beb3a 100644
+--- a/tracspamfilter/captcha/image.py
++++ b/tracspamfilter/captcha/image.py
+@@ -38,7 +38,7 @@ class ImageCaptcha(Component):
+ 
+     implements(ICaptchaMethod, IRequestHandler)
+ 
+-    fonts = ListOption('spam-filter', 'captcha_image_fonts', 'vera.ttf',
++    fonts = ListOption('spam-filter', 'captcha_image_fonts', '/usr/share/pyshared/tracspamfilter/fonts/vera.ttf',
+         doc="""Set of fonts to choose from when generating image CAPTCHA.""")
+ 
+     font_size = IntOption('spam-filter', 'captcha_image_font_size', 25,
